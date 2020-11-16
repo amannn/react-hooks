@@ -1,19 +1,18 @@
 {
   "name": "use-optionally-controlled-state",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "description": "A React hook to implement components that support both controlled and uncontrolled props.",
   "author": "Jan Amann <jan@amann.me>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amannn/react-hooks.git",
-    "directory": "packages/use-optionally-controlled-state"
+    "url": "https://github.com/amannn/react-hooks/tree/master/packages/use-optionally-controlled-state"
   },
   "scripts": {
-    "start": "tsdx watch --tsconfig tsconfig.build.json --verbose --noClean",
-    "build": "tsdx build --tsconfig tsconfig.build.json",
+    "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
+    "build": "tsdx build --tsconfig tsconfig.json",
     "test": "tsdx test",
-    "lint": "tsdx lint",
+    "lint": "eslint src test",
     "prepublish": "npm run build"
   },
   "main": "dist/index.js",
