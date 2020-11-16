@@ -1,6 +1,0 @@
-use-optionaly-controlled-state:
-  - packages/use-optionaly-controlled-state/*
-  - packages/use-optionaly-controlled-state/**/*
-
-repo:
-  - ./*
