@@ -1,5 +1,5 @@
 {
-  "name": "mono",
+  "name": "react-hooks",
   "private": true,
   "devDependencies": {
     "@types/react-dom": "^16.9.8",
