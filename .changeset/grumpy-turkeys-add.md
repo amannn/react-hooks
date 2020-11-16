@@ -1,5 +1,5 @@
 ---
-'@thefakeorg/utils': patch
+'use-optionally-controlled-state': patch
 ---
 
-Add new sum method
+Initial implementation
