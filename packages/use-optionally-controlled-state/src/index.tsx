@@ -1,9 +1,3 @@
-import * as React from 'react';
-
-export function Bold({ message }: { message: string }) {
-  return <b>{message}</b>;
-}
-
-export function Zop({ message }: { message: string }) {
-  return <i>{message}</i>;
+export default function sum(a:number, b:number) {
+  return a + b;
 }
