@@ -18,8 +18,8 @@
   "scripts": {
     "lerna": "lerna",
     "start": "lerna run start --stream --parallel",
-    "test": "lerna run test --",
-    "lint": "lerna run lint -- --fix",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
     "build": "lerna run build",
     "prepublish": "lerna run prepublish"
   }
