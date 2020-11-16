@@ -12,7 +12,7 @@
     "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
     "build": "tsdx build --tsconfig tsconfig.json",
     "test": "tsdx test",
-    "lint": "eslint src test",
+    "lint": "eslint src test && tsc",
     "prepublish": "npm run build"
   },
   "main": "dist/index.js",
@@ -27,9 +27,15 @@
     "react-dom": "^16.8.0 || ^17.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "use-constant": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.1.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   }
 }
