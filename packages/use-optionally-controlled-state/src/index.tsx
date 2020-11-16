@@ -4,15 +4,15 @@ import useConstant from 'use-constant';
 /**
  * Enables a component state to be either controlled or uncontrolled.
  */
-export default function useOptionallyControlledState<ValueType>({
+export default function useOptionallyControlledState<Value>({
   controlledValue,
   initialValue,
   onChange
 }: {
-  controlledValue?: ValueType;
-  initialValue?: ValueType;
-  onChange?(value: ValueType): void;
-}): [ValueType | undefined, (value: ValueType) => void] {
+  controlledValue?: Value;
+  initialValue?: Value;
+  onChange?(value: Value): void;
+}): [Value | undefined, (value: Value) => void] {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
   const [stateValue, setStateValue] = useState(initialValue);
@@ -45,7 +45,7 @@ export default function useOptionallyControlledState<ValueType>({
 
   const value = isControlled ? controlledValue : stateValue;
 
-  function onValueChange(nextValue: ValueType) {
+  function onValueChange(nextValue: Value) {
     if (!isControlled) setStateValue(nextValue);
     if (onChange) onChange(nextValue);
   }
