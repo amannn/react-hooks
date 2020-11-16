@@ -12,7 +12,7 @@
     "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
     "build": "tsdx build --tsconfig tsconfig.json",
     "test": "tsdx test",
-    "lint": "eslint src test && tsc",
+    "lint": "eslint src test && tsc --noEmit",
     "prepublish": "npm run build"
   },
   "main": "dist/index.js",
