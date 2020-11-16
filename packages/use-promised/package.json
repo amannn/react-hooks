@@ -1,0 +1,37 @@
+{
+  "name": "use-promised",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "A React hook to get promise data without having to deal with asynchronicity.",
+  "author": "Jan Amann <jan@amann.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amannn/react-hooks/tree/master/packages/use-promised"
+  },
+  "scripts": {
+    "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
+    "build": "tsdx build --tsconfig tsconfig.json",
+    "test": "tsdx test",
+    "lint": "eslint src test && tsc --noEmit",
+    "prepublish": "npm run build"
+  },
+  "main": "dist/index.js",
+  "module": "dist/use-promised.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.1.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  }
+}
