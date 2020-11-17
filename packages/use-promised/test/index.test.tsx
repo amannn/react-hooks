@@ -12,7 +12,7 @@ const API = {
 };
 
 function FeedbackForm() {
-  const [promise, setPromise] = usePromised<string, unknown>();
+  const [promise, setPromise] = usePromised<string>();
 
   function onSubmit() {
     setPromise(API.submitFeedback());

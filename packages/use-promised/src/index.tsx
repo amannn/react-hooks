@@ -1,10 +1,10 @@
 import {useState, useEffect} from 'react';
 
 export enum PromiseState {
-  IDLE = 'IDLE',
-  PENDING = 'PENDING',
-  REJECTED = 'REJECTED',
-  FULFILLED = 'FULFILLED'
+  IDLE = 'idle',
+  PENDING = 'pending',
+  REJECTED = 'rejected',
+  FULFILLED = 'fulfilled'
 }
 
 export type PromiseData<ResultType, ErrorType> =
@@ -13,7 +13,7 @@ export type PromiseData<ResultType, ErrorType> =
   | {state: PromiseState.REJECTED; error: ErrorType}
   | {state: PromiseState.FULFILLED; result: ResultType};
 
-export default function usePromised<Result, Error extends unknown>(): [
+export default function usePromised<Result = unknown, Error = unknown>(): [
   PromiseData<Result, Error>,
   (promise: Promise<Result>) => void
 ] {

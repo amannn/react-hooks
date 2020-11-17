@@ -2,7 +2,7 @@
   "name": "use-promised",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "A React hook to get promise data without having to deal with asynchronicity.",
+  "description": "A React hook to implement asynchronous callbacks without having to deal with asynchronicity.",
   "author": "Jan Amann <jan@amann.me>",
   "repository": {
     "type": "git",

@@ -2,7 +2,7 @@
 
 [![Stable release](https://img.shields.io/npm/v/use-promised.svg)](https://npm.im/use-promised)
 
-A React hook to get promise data without having to deal with asynchronicity.
+A React hook to implement asynchronous callbacks without having to deal with asynchronicity.
 
 ## The problem
 
@@ -45,17 +45,18 @@ Here are some issues with this code:
 
 The list goes on but the point is: **Handling async callbacks in React components is hard.**.
 
-Maybe you've heard that you can avoid these issues by moving your code into `useEffect`, but [that hook is far from easy to use](https://overreacted.io/a-complete-guide-to-useeffect/).
+Maybe you've heard that you can avoid these issues by moving your code into `useEffect`, but [that hook has its own peculiarities to be aware of](https://overreacted.io/a-complete-guide-to-useeffect/).
 
 ## This solution
 
-This is a custom hook that attempts to remove all the complexity that comes with handling asynchronicity correctly.
+This is a custom hook that attempts to remove all the complexity that comes with handling asynchronicity in callbacks correctly.
 
 **Features:**
 
 - Feels like synchronous programming – no `useEffect`.
 - Pending requests are canceled when they are interrupted by another request.
-- When you're using TypeScript, impossible states like having a result and error simultaneously are prevented.
+- Impossible states like having a result and error simultaneously are prevented.
+- When you're using TypeScript you'll benefit from additional guardrails like requiring a check for if the promise has rejected before being able to access the error.
 - If your asynchronous callback reaches through multiple levels of components, you can subscribe to the promise result right on the level where you need it – no need to pass down a loading and error state. If desired, you can subscribe in multiple components at the same time.
 
 ## Example
@@ -87,3 +88,5 @@ function FeedbackForm() {
   );
 }
 ```
+
+Note that you can also use plain strings like `rejected` instead of `PromiseState.REJECTED`.

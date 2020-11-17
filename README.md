@@ -1,8 +1,14 @@
 # react-hooks
 
-See [individual packages](./packages/).
+A collection of commonly used hooks for React apps.
 
-Other recommended hooks with high quality:
+**Packages:**
+
+- [`use-promised`](./packages/use-promised)
+- [`use-optionally-controlled-state`](./packages/use-optionally-controlled-state)
+- [`use-last`](./packages/use-last)
+
+**Recommended 3rd party hooks:**
 
  - [`use-previous`](https://github.com/Andarist/use-previous)
  - [`use-constant`](https://github.com/Andarist/use-constant)
