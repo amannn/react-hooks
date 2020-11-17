@@ -76,10 +76,9 @@ it('allows using a controlled value without a change handler', () => {
   render(<Expander expanded />);
 });
 
-it('throws when both a controlled and an initial value is provided', () => {
-  expect(() => render(<Expander expanded initialExpanded />)).toThrow(
-    'Only an initial or a controlled value should be supplied.'
-  );
+it('uses the controlled value when both a controlled as well as an initial value is provided', () => {
+  render(<Expander expanded initialExpanded={false} />);
+  screen.getByText('Children');
 });
 
 it('throws when neither a controlled nor an initial value is provided', () => {

@@ -18,12 +18,6 @@ export default function useOptionallyControlledState<Value>({
   const [stateValue, setStateValue] = useState(initialValue);
 
   if (__DEV__) {
-    if (initialValue !== undefined && controlledValue !== undefined) {
-      throw new Error(
-        'Only an initial or a controlled value should be supplied.'
-      );
-    }
-
     if (initialValue === undefined && controlledValue === undefined) {
       throw new Error(
         'Either an initial or a controlled value should be provided.'
