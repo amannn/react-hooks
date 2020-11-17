@@ -83,7 +83,9 @@ function FeedbackForm() {
       {promise.state === PromiseState.FULFILLED && (
         <p>Result: {promise.result}</p>
       )}
-      {promise.state === PromiseState.REJECTED && <p>Error: {promise.error}</p>}
+      {promise.state === PromiseState.REJECTED && (
+        <p>Error: {promise.error}</p>
+      )}
     </>
   );
 }
