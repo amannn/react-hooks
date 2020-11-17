@@ -65,7 +65,7 @@ This is a custom hook that attempts to remove all the complexity that comes with
 import usePromised, {PromiseState} from 'use-promised';
 
 function FeedbackForm() {
-  const [promise, setPromise] = usePromised<string>();
+  const [promise, setPromise] = usePromised();
 
   function onSubmit() {
     setPromise(API.submitFeedback());
