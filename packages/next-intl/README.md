@@ -28,3 +28,8 @@ biggest strength of this library is that it's hooks only. therefore the same API
 
 cache values as well?
 separate repo?
+
+TODO:
+ - Pass currency to number?
+ - Relative time
+ - Check other features of react-intl

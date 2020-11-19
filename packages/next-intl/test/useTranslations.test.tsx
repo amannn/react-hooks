@@ -140,8 +140,3 @@ it('can access a nested namespace in the static call', () => {
 
   screen.getByText('Hello');
 });
-
-// relative time
-// https://github.com/formatjs/formatjs/tree/18cd5aef07f83456a1ecc98beb86b96869b6cf93/packages/intl-relativetimeformat
-
-// how to pass currency?
