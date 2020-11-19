@@ -1,0 +1,40 @@
+{
+  "name": "next-intl",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "TODO",
+  "author": "Jan Amann <jan@amann.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amannn/react-hooks/tree/master/packages/next-intl"
+  },
+  "scripts": {
+    "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
+    "build": "tsdx build --tsconfig tsconfig.json",
+    "test": "tsdx test",
+    "lint": "eslint src test && tsc --noEmit",
+    "prepublish": "npm run build"
+  },
+  "main": "dist/index.js",
+  "module": "dist/next-intl.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist"
+  ],
+  "peerDependencies": {
+    "next": "^10.0.0",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "intl-messageformat": "^9.3.18",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.1.2",
+    "next": "^10.0.2",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  }
+}

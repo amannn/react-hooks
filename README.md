@@ -13,3 +13,6 @@ A collection of commonly used hooks for React apps.
  - [`use-previous`](https://github.com/Andarist/use-previous)
  - [`use-constant`](https://github.com/Andarist/use-constant)
  - [`use-isomorphic-layout-effect`](https://github.com/Andarist/use-isomorphic-layout-effect)
+ - [`@use-it/event-listener`](https://github.com/donavon/use-event-listener)
+
+All recommended hooks support TypeScript.
