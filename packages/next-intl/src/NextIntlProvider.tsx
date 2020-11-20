@@ -5,11 +5,13 @@ import NextIntlMessages from './NextIntlMessages';
 type Props = {
   children: ReactNode;
   messages: NextIntlMessages;
+  /* Override the automatically provided locale from Next.js */
+  locale?: string;
 };
 
-export default function NextIntlProvider({children, messages}: Props) {
+export default function NextIntlProvider({children, locale, messages}: Props) {
   return (
-    <NextIntlContext.Provider value={{messages}}>
+    <NextIntlContext.Provider value={{messages, locale}}>
       {children}
     </NextIntlContext.Provider>
   );

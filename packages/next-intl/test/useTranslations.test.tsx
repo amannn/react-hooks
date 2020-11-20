@@ -25,7 +25,10 @@ const messages: NextIntlMessages = {
     selectordinal:
       "It's my cat's {year, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} birthday!",
     richText: 'This is <important>important</important>',
-    attributeUrl: 'https://example.com'
+    attributeUrl: 'https://example.com',
+    nested: {
+      label: 'Nested'
+    }
   },
   generic: {
     cancel: 'Cancel'
@@ -109,6 +112,11 @@ it('can use messages in attributes', () => {
   );
 
   expect(container.innerHTML).toBe('<a href="https://example.com">Hello</a>');
+});
+
+it('can resolve nested paths', () => {
+  const {container} = renderMessage('nested.label');
+  expect(container.innerHTML).toBe('Nested');
 });
 
 it('returns all messages when no namespace is specified', () => {

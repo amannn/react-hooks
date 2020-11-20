@@ -39,7 +39,7 @@ function resolvePath(messages: NextIntlMessages, idPath: string) {
  */
 export default function useTranslations(path?: string) {
   const context = useContext(NextIntlContext);
-  const {locale} = useRouter();
+  const nextLocale = useRouter().locale;
 
   const cachedFormatsByLocaleRef = useRef<
     Record<string, Record<string, IntlMessageFormat>>
@@ -53,6 +53,7 @@ export default function useTranslations(path?: string) {
     }
   }
 
+  const locale = context.locale || nextLocale;
   const allMessages = context.messages;
   const messages = useMemo(
     () => (path ? resolvePath(allMessages, path) : allMessages),
