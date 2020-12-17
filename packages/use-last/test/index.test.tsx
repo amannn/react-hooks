@@ -2,11 +2,7 @@ import {render, screen} from '@testing-library/react';
 import * as React from 'react';
 import useLast from '../src';
 
-type Props = {
-  value: number;
-};
-
-function LastEvenValue({value}: Props) {
+function LastEvenValue({value}: {value: number}) {
   const evenValue = useLast(value, value % 2 === 0);
   return <p>{evenValue}</p>;
 }
@@ -28,4 +24,17 @@ it('skips values not meeting the condition', () => {
 
   rerender(<LastEvenValue value={4} />);
   screen.getByText('4');
+});
+
+it('skips over undefined values by default', () => {
+  function LastDefinedValue({value}: {value?: number}) {
+    const definedValue = useLast(value);
+    return <p>{definedValue}</p>;
+  }
+
+  const {rerender} = render(<LastDefinedValue value={2} />);
+  screen.getByText('2');
+
+  rerender(<LastDefinedValue value={undefined} />);
+  screen.getByText('2');
 });

@@ -35,3 +35,5 @@ function LastEvenValue({value}: Props) {
 // Rendered
 <LastEvenValue value={4} />
 ```
+
+The second parameter is optional and defaults to `value !== undefined`, i.e. undefined values are ignored.
