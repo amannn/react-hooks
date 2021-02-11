@@ -6,7 +6,7 @@ A React hook to implement asynchronous callbacks without having to deal with asy
 
 ## The problem
 
-Can you tell what could go wrong in this code?
+Can you tell what could go wrong with this code?
 
 ```jsx
 function FeedbackForm() {
