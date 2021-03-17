@@ -43,7 +43,7 @@ Here are some issues with this code:
 3. When the component unmounts in the middle of the request, you'll see the dreaded "Can't perform a React state update on an unmounted component" warning.
 4. If an error is received, it won't be removed when a new attempt is made – even if a subsequent request succeeds.
 
-The list goes on but the point is: **Handling async callbacks in React components is hard.**.
+The list goes on but the point is: **Handling async callbacks in React components is hard**.
 
 Maybe you've heard that you can avoid these issues by moving your code into `useEffect`, but [that hook has its own peculiarities to be aware of](https://overreacted.io/a-complete-guide-to-useeffect/).
 

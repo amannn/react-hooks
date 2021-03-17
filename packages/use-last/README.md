@@ -17,7 +17,7 @@ A hook that returns the latest value that meets the specified condition.
 **Implementation:**
 
 ```jsx
-function LastEvenValue({value}: Props) {
+function LastEvenValue({value}) {
   const evenValue = useLast(value, value % 2 === 0);
   return <p>{evenValue}</p>;
 }
