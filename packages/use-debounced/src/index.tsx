@@ -3,9 +3,6 @@ import {useEffect, useRef, useReducer} from 'react';
 /**
  * Debounces the provided value in render. If `delay`
  * is zero, the value is updated synchronously.
- * @param {T} value
- * @param {Number} delay
- * @return {T}
  */
 export default function useDebounced<T>(value: T, delay = 300) {
   const isSynchronous = delay === 0;
