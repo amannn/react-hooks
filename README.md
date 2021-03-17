@@ -7,6 +7,7 @@ A collection of commonly used hooks for React apps.
 - [`use-promised`](./packages/use-promised)
 - [`use-optionally-controlled-state`](./packages/use-optionally-controlled-state)
 - [`use-last`](./packages/use-last)
+- [`use-debounced`](./packages/use-debounced)
 
 **Recommended 3rd party hooks:**
 
