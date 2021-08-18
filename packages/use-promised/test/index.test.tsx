@@ -24,21 +24,15 @@ function FeedbackForm() {
 
   return (
     <>
-      <button
-        disabled={promise.state === PromiseState.PENDING}
-        onClick={onSubmit}
-        type="button"
-      >
+      <button disabled={promise.pending} onClick={onSubmit} type="button">
         Submit feedback
       </button>
       <button onClick={onTriggerError} type="button">
         Trigger error
       </button>
       <p>State: {promise.state}</p>
-      {promise.state === PromiseState.FULFILLED && (
-        <p>Result: {promise.result}</p>
-      )}
-      {promise.state === PromiseState.REJECTED && <p>Error: {promise.error}</p>}
+      {promise.fulfilled && <p>Result: {promise.result}</p>}
+      {promise.rejected && <p>Error: {promise.error}</p>}
     </>
   );
 }
