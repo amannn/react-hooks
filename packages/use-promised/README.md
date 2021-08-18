@@ -74,16 +74,16 @@ function FeedbackForm() {
   return (
     <>
       <button
-        disabled={promise.state === PromiseState.PENDING}
+        disabled={promise.pending}
         onClick={onSubmit}
         type="button"
       >
         Submit feedback
       </button>
-      {promise.state === PromiseState.FULFILLED && (
+      {promise.fulfilled && (
         <p>Result: {promise.result}</p>
       )}
-      {promise.state === PromiseState.REJECTED && (
+      {promise.rejected && (
         <p>Error: {promise.error}</p>
       )}
     </>
@@ -91,4 +91,4 @@ function FeedbackForm() {
 }
 ```
 
-Note that you can also use plain strings like `rejected` instead of `PromiseState.REJECTED`.
+Note that you can also read the state in a generic fashion from `promise.state`.
