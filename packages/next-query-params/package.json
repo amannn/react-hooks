@@ -1,0 +1,41 @@
+{
+  "name": "next-query-params",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "A small wrapper for `use-query-params` for Next.js apps",
+  "author": "Jan Amann <jan@amann.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amannn/react-hooks/tree/master/packages/next-query-params"
+  },
+  "scripts": {
+    "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
+    "build": "tsdx build --tsconfig tsconfig.json",
+    "test": "echo \"No tests yet\"",
+    "lint": "eslint src test && tsc --noEmit",
+    "prepublish": "npm run build"
+  },
+  "main": "dist/index.js",
+  "module": "dist/next-query-params.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist"
+  ],
+  "peerDependencies": {
+    "next": "^11.0.0",
+    "query-string": ">=5.1.0",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0",
+    "use-query-params": "^1.2.3"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.1.2",
+    "next": "11.1.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  }
+}
