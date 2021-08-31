@@ -1,6 +1,6 @@
 {
   "name": "next-query-params",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "A small wrapper for `use-query-params` in Next.js apps.",
   "author": "Jan Amann <jan@amann.me>",
