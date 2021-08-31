@@ -24,7 +24,7 @@ export default function Index() {
   return (
     <div>
       <p>
-        My name is <input onChange={onNameInputChange} value={name} />
+        My name is <input onChange={onNameInputChange} value={name} /> ({name})
       </p>
       <label>
         Available{' '}

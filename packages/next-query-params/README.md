@@ -30,7 +30,7 @@ Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/
 ```jsx
 import { useQueryParam, StringParam, withDefault } from 'next-query-params';
 
-export default function Index() {
+export default function IndexPage() {
   const [name, setName] = useQueryParam('name', withDefault(StringParam, ''));
 
   function onNameInputChange(event) {
@@ -40,6 +40,13 @@ export default function Index() {
   return (
     <p>My name is <input value={name} onChange={onNameInputChange} /></p>
   );
+}
+
+// Note that if query parameters affect the server-rendered HTML of the page,
+// you should define this function. Statically generated pages only have
+// access to query parameters on the client side.
+export function getServerSideProps() {
+  return {props: {}};
 }
 ```
 
