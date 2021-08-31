@@ -13,8 +13,5 @@
     "next-query-params": "*",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
-  },
-  "devDependencies": {
-    "typescript": "^4.4.2"
   }
 }
