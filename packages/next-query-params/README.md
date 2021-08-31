@@ -2,15 +2,13 @@
 
 [![Stable release](https://img.shields.io/npm/v/next-query-params.svg)](https://npm.im/next-query-params)
 
-A small wrapper for [`user-query-params`](https://www.npmjs.com/package/use-query-params) for Next.js apps.
+A small wrapper for [`use-query-params`](https://www.npmjs.com/package/use-query-params) in Next.js apps.
 
 ## Installation
 
 ```sh
-npm install next-query-params query-string
+npm install next-query-params
 ```
-
-**Note:** For IE11 support, please use `query-string@5.1.1`.
 
 ```jsx
 // _app.js
@@ -27,7 +25,7 @@ export default function App({ Component, pageProps }) {
 
 ## Usage
 
-Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/use-query-params). This library only configures the provider for usage with Next.js and additionally re-exports all modules from `use-query-params` for convenience.
+Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/use-query-params). This library only configures the provider for usage with Next.js and additionally re-exports all modules from `use-query-params` for convenience. Note that `use-query-params` and `query-string` is bundled in this library to support IE11.
 
 ```jsx
 import { useQueryParam, StringParam, withDefault } from 'next-query-params';
@@ -47,4 +45,4 @@ export default function Index() {
 
 ## Credits
 
-Everyone who participated in [use-query-params#13](https://github.com/pbeshai/use-query-params/issues/13). I only moved the code to a reusable library.
+This library is just a small wrapper around [`use-query-params`](https://github.com/pbeshai/use-query-params) by [Peter Beshai](https://github.com/pbeshai) and uses the code that was collaboratively created in [use-query-params#13](https://github.com/pbeshai/use-query-params/issues/13). I mostly moved the code to a reusable library.
