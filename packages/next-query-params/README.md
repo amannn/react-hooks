@@ -16,7 +16,7 @@ npm install next-query-params
 // _app.js
 import {NextQueryParamProvider} from 'next-query-params';
 
-export default function App({ Component, pageProps }) {
+export default function App({Component, pageProps}) {
   return (
     <NextQueryParamProvider>
       <Component {...pageProps} />
@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }) {
 Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/use-query-params). This library only configures the provider for usage with Next.js and additionally re-exports all modules from `use-query-params` for convenience. Note that unlike `use-query-params` this library has all dependencies included and compiled to support IE11.
 
 ```jsx
-import { useQueryParam, StringParam, withDefault } from 'next-query-params';
+import {useQueryParam, StringParam, withDefault} from 'next-query-params';
 
 export default function IndexPage() {
   const [name, setName] = useQueryParam('name', withDefault(StringParam, ''));
@@ -54,4 +54,4 @@ export function getServerSideProps() {
 
 ## Credits
 
-This library is just a small wrapper around [`use-query-params`](https://github.com/pbeshai/use-query-params) by [Peter Beshai](https://github.com/pbeshai) and is based on the code that was collaboratively created in [use-query-params#13](https://github.com/pbeshai/use-query-params/issues/13).
+This library is a small wrapper around [`use-query-params`](https://github.com/pbeshai/use-query-params) by [Peter Beshai](https://github.com/pbeshai) and is based on the code that was collaboratively created in [use-query-params#13](https://github.com/pbeshai/use-query-params/issues/13).
