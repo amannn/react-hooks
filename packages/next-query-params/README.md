@@ -2,7 +2,9 @@
 
 [![Stable release](https://img.shields.io/npm/v/next-query-params.svg)](https://npm.im/next-query-params)
 
-A small wrapper for [`use-query-params`](https://www.npmjs.com/package/use-query-params) in Next.js apps.
+Convenient state management of query parameters in Next.js apps.
+
+Note that this library is a small wrapper for [`use-query-params`](https://www.npmjs.com/package/use-query-params) to integrate with Next.js.
 
 ## Installation
 
@@ -25,7 +27,7 @@ export default function App({ Component, pageProps }) {
 
 ## Usage
 
-Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/use-query-params). This library only configures the provider for usage with Next.js and additionally re-exports all modules from `use-query-params` for convenience. Note that `use-query-params` and `query-string` is bundled in this library to support IE11.
+Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/use-query-params). This library only configures the provider for usage with Next.js and additionally re-exports all modules from `use-query-params` for convenience. Note that unlike `user-query-params` this library has all dependencies included and compiled to support IE11.
 
 ```jsx
 import { useQueryParam, StringParam, withDefault } from 'next-query-params';
@@ -52,4 +54,4 @@ export function getServerSideProps() {
 
 ## Credits
 
-This library is just a small wrapper around [`use-query-params`](https://github.com/pbeshai/use-query-params) by [Peter Beshai](https://github.com/pbeshai) and uses the code that was collaboratively created in [use-query-params#13](https://github.com/pbeshai/use-query-params/issues/13). I mostly moved the code to a reusable library.
+This library is just a small wrapper around [`use-query-params`](https://github.com/pbeshai/use-query-params) by [Peter Beshai](https://github.com/pbeshai) and is based on the code that was collaboratively created in [use-query-params#13](https://github.com/pbeshai/use-query-params/issues/13).

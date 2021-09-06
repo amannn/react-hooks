@@ -1,8 +1,9 @@
 {
   "name": "next-query-params",
   "version": "1.0.0",
+  "sideEffects": false,
   "license": "MIT",
-  "description": "A small wrapper for `use-query-params` in Next.js apps.",
+  "description": "Convenient state management of query parameters in Next.js apps.",
   "author": "Jan Amann <jan@amann.me>",
   "repository": {
     "type": "git",

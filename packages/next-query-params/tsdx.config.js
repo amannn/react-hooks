@@ -1,6 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const commonjs = require('@rollup/plugin-commonjs');
 
+// The `query-string` dependency is bundled so it works in IE11.
+// For this to work, we also have to bundle the other dependencies
+// (except for `react` and `next` of course).
+
 const commonJsDependencies = [
   'use-query-params',
   'serialize-query-params',
@@ -10,10 +14,6 @@ const commonJsDependencies = [
   'split-on-first',
   'strict-uri-encode'
 ];
-
-// The `query-string` dependency is bundled so it works in IE11.
-// For this to work, we also have to bundle the other dependencies
-// (except for `react` and `next` of course).
 
 module.exports = {
   rollup(config) {
