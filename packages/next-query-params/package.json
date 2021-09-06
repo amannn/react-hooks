@@ -1,6 +1,6 @@
 {
   "name": "next-query-params",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "sideEffects": false,
   "license": "MIT",
   "description": "Convenient state management of query parameters in Next.js apps.",
@@ -9,6 +9,15 @@
     "type": "git",
     "url": "https://github.com/amannn/react-hooks/tree/master/packages/next-query-params"
   },
+  "keywords": [
+    "react",
+    "next",
+    "url",
+    "query",
+    "parameters",
+    "hook",
+    "hooks"
+  ],
   "scripts": {
     "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
     "build": "tsdx build --tsconfig tsconfig.json",
