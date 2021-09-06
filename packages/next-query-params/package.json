@@ -1,0 +1,43 @@
+{
+  "name": "next-query-params",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "license": "MIT",
+  "description": "Convenient state management of query parameters in Next.js apps.",
+  "author": "Jan Amann <jan@amann.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amannn/react-hooks/tree/master/packages/next-query-params"
+  },
+  "scripts": {
+    "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
+    "build": "tsdx build --tsconfig tsconfig.json",
+    "test": "echo \"No tests yet\"",
+    "lint": "eslint src && tsc --noEmit",
+    "prepublish": "npm run build"
+  },
+  "main": "dist/index.js",
+  "module": "dist/next-query-params.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist"
+  ],
+  "peerDependencies": {
+    "next": "^10.0.0 || ^11.0.0",
+    "react": "^16.8.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "11.0.0",
+    "@testing-library/react": "11.1.2",
+    "next": "^10.0.0",
+    "query-string": "7.0.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "use-query-params": "1.2.3"
+  }
+}
+
