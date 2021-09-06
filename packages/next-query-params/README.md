@@ -2,7 +2,7 @@
 
 [![Stable release](https://img.shields.io/npm/v/next-query-params.svg)](https://npm.im/next-query-params)
 
-Convenient state management of query parameters in Next.js apps.
+> Convenient state management of query parameters in Next.js apps.
 
 Note that this library is a small wrapper for [`use-query-params`](https://www.npmjs.com/package/use-query-params) to integrate with Next.js.
 
@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
 
 ## Usage
 
-Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/use-query-params). This library only configures the provider for usage with Next.js and additionally re-exports all modules from `use-query-params` for convenience. Note that unlike `user-query-params` this library has all dependencies included and compiled to support IE11.
+Please refer to the usage of [`use-query-params`](https://www.npmjs.com/package/use-query-params). This library only configures the provider for usage with Next.js and additionally re-exports all modules from `use-query-params` for convenience. Note that unlike `use-query-params` this library has all dependencies included and compiled to support IE11.
 
 ```jsx
 import { useQueryParam, StringParam, withDefault } from 'next-query-params';
