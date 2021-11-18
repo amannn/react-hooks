@@ -4,6 +4,8 @@
 
 A lightweight React hook to animate the presence of an element.
 
+[Demo app](https://codesandbox.io/s/old-hill-fdny6?file=/src/App.tsx)
+
 ## The problem
 
 There are two problems that you have to solve when animating the presence of an element:
