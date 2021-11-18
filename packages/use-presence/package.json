@@ -1,12 +1,12 @@
 {
-  "name": "use-last",
-  "version": "1.0.1",
+  "name": "use-presence",
+  "version": "1.0.0",
   "license": "MIT",
-  "description": "A React hook to conditionally return the last value that has met a certain criteria.",
+  "description": "A lightweight React hook to animate the presence of an element.",
   "author": "Jan Amann <jan@amann.me>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/amannn/react-hooks/tree/master/packages/use-last"
+    "url": "https://github.com/amannn/react-hooks/tree/master/packages/use-presence"
   },
   "scripts": {
     "start": "tsdx watch --tsconfig tsconfig.json --verbose --noClean",
@@ -16,7 +16,7 @@
     "prepublish": "npm run build"
   },
   "main": "dist/index.js",
-  "module": "dist/use-last.esm.js",
+  "module": "dist/use-presence.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "README.md",
