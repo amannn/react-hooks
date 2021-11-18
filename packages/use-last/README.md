@@ -2,7 +2,7 @@
 
 [![Stable release](https://img.shields.io/npm/v/use-last.svg)](https://npm.im/use-last)
 
-A React hook to conditionally render the last value that has met a certain criteria.
+A React hook to conditionally return the last value that has met a certain criteria.
 
 ## The problem
 
