@@ -1,6 +1,6 @@
 # use-presence
 
-[![Stable release](https://img.shields.io/npm/v/use-presence.svg)](https://npm.im/use-presence)
+![Gzipped size](https://badgen.net/bundlephobia/minzip/use-presence)[![Stable release](https://img.shields.io/npm/v/use-presence.svg)](https://npm.im/use-presence)
 
 A lightweight React hook to animate the presence of an element.
 
@@ -13,7 +13,7 @@ There are two problems that you have to solve when animating the presence of an 
 
 ## This solution
 
-This hook provides a solution where the animating element is only mounted the minimum of time, while making sure the animation is fully visible to the user. The rendering is left to the user to support all kinds of styling solutions.
+This hook provides a lightweight solution where the animating element is only mounted the minimum of time, while making sure the animation is fully visible to the user. The rendering is left to the user to support all kinds of styling solutions.
 
 ## Example
 
