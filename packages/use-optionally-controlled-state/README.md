@@ -1,6 +1,6 @@
 # use-optionally-controlled-state
 
-![Gzipped size](https://badgen.net/bundlephobia/minzip/use-optionally-controlled-state)[![Stable release](https://img.shields.io/npm/v/use-optionally-controlled-state.svg)](https://npm.im/use-optionally-controlled-state)
+[![Stable release](https://img.shields.io/npm/v/use-optionally-controlled-state.svg)](https://npm.im/use-optionally-controlled-state)
 
 A React hook to enable a component state to either be controlled or uncontrolled.
 

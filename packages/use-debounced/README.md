@@ -1,6 +1,6 @@
 # use-debounced
 
-![Gzipped size](https://badgen.net/bundlephobia/minzip/use-debounced)[![Stable release](https://img.shields.io/npm/v/use-debounced.svg)](https://npm.im/use-debounced)
+[![Stable release](https://img.shields.io/npm/v/use-debounced.svg)](https://npm.im/use-debounced)
 
 A React hook to debounce the provided value in render. If `delay` is zero, the value is updated synchronously.
 

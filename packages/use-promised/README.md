@@ -1,6 +1,6 @@
 # use-promised
 
-![Gzipped size](https://badgen.net/bundlephobia/minzip/use-promised)[![Stable release](https://img.shields.io/npm/v/use-promised.svg)](https://npm.im/use-promised)
+[![Stable release](https://img.shields.io/npm/v/use-promised.svg)](https://npm.im/use-promised)
 
 A React hook to implement asynchronous callbacks without having to deal with asynchronicity.
 

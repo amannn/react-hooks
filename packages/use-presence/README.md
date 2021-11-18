@@ -1,6 +1,6 @@
 # use-presence
 
-![Gzipped size](https://badgen.net/bundlephobia/minzip/use-presence)[![Stable release](https://img.shields.io/npm/v/use-presence.svg)](https://npm.im/use-presence)
+[![Stable release](https://img.shields.io/npm/v/use-presence.svg)](https://npm.im/use-presence)
 
 A lightweight React hook to animate the presence of an element.
 
