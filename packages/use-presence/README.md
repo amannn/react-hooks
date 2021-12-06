@@ -2,9 +2,11 @@
 
 [![Stable release](https://img.shields.io/npm/v/use-presence.svg)](https://npm.im/use-presence)
 
-A lightweight React hook to animate the presence of an element.
+A 1kb React hook to animate the presence of an element.
 
-[Demo app](https://codesandbox.io/s/old-hill-fdny6?file=/src/App.tsx)
+<img width="400" src="media/use-presence-demo.gif" />
+
+[Demo app](https://codesandbox.io/s/usepresence-demo-1u6vq?file=/src/Expander.js)
 
 ## The problem
 
@@ -22,7 +24,7 @@ This hook provides a lightweight solution where the animating element is only mo
 ```jsx
 import usePresence from 'use-presence';
 
-function Expander({children, isOpen, transitionDuration = 300}) {
+function Expander({children, isOpen, transitionDuration = 500}) {
   const {isMounted, isVisible, isAnimating} = usePresence(isOpen, {transitionDuration});
 
   if (!isMounted) {
@@ -38,7 +40,7 @@ function Expander({children, isOpen, transitionDuration = 300}) {
       transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
       transitionProperty: 'max-height, opacity',
       ...(isVisible && {
-        maxHeight: 9999,
+        maxHeight: 500,
         opacity: 1,
         transitionTimingFunction: 'cubic-bezier(0.8, 0, 0.6, 1)'
       }),
@@ -70,9 +72,9 @@ const {
   opts: {
     /** Duration in milliseconds used both for enter and exit transitions. */
     transitionDuration: number;
-    /** Duration in milliseconds used for enter transitions. */
+    /** Duration in milliseconds used for enter transitions (overrides `transitionDuration` if provided). */
     enterTransitionDuration: number;
-    /** Duration in milliseconds used for exit transitions. */
+    /** Duration in milliseconds used for exit transitions (overrides `transitionDuration` if provided). */
     exitTransitionDuration: number;
     /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
     initialEnter?: boolean;

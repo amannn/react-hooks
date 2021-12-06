@@ -12,29 +12,29 @@ type SeparateTransitionConfig = {
   exitTransitionDuration: number;
 };
 
-function isSharedConfig(
-  opts: SharedTransitionConfig | SeparateTransitionConfig
-): opts is SharedTransitionConfig {
-  return 'transitionDuration' in opts;
-}
-
 /**
  * Animates the appearance of its children.
  */
 export default function usePresence(
   /** Indicates whether the component that the resulting values will be used upon should be visible to the user. */
   isVisible: boolean,
-  opts: (SharedTransitionConfig | SeparateTransitionConfig) & {
+  opts: (
+    | SharedTransitionConfig
+    | SeparateTransitionConfig
+    | (SharedTransitionConfig & SeparateTransitionConfig)
+  ) & {
     /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
     initialEnter?: boolean;
   }
 ) {
-  const exitTransitionDuration = !isSharedConfig(opts)
-    ? opts.exitTransitionDuration
-    : opts.transitionDuration;
-  const enterTransitionDuration = !isSharedConfig(opts)
-    ? opts.enterTransitionDuration
-    : opts.transitionDuration;
+  const exitTransitionDuration =
+    'exitTransitionDuration' in opts
+      ? opts.exitTransitionDuration
+      : opts.transitionDuration;
+  const enterTransitionDuration =
+    'enterTransitionDuration' in opts
+      ? opts.enterTransitionDuration
+      : opts.transitionDuration;
 
   const initialEnter = opts.initialEnter ?? false;
   const [animateIsVisible, setAnimateIsVisible] = useState(
