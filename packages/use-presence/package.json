@@ -1,6 +1,6 @@
 {
   "name": "use-presence",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "A lightweight React hook to animate the presence of an element.",
   "author": "Jan Amann <jan@amann.me>",
