@@ -71,10 +71,10 @@ export default function usePresence(
 
   useEffect(() => {
     if (isVisible && isMounted && !animateIsVisible) {
+      // Force a reflow so the initial styles are flushed to the DOM
       if (typeof document !== undefined) {
-        // Force a reflow so the initial styles are flushed to the DOM
-        // eslint-disable-next-line no-unused-expressions
-        document.body.offsetHeight;
+        // We need a side effect so Terser doesn't remove this statement
+        (window as any)._usePresenceReflow = document.body.offsetHeight;
       }
 
       const animationFrameId = requestAnimationFrame(() => {
