@@ -6,7 +6,7 @@ A 1kb React hook to animate the presence of an element.
 
 <img width="400" src="media/use-presence-demo.gif" />
 
-[Demo app](https://codesandbox.io/s/old-hill-fdny6?file=/src/App.tsx)
+[Demo app](https://codesandbox.io/s/usepresence-demo-1u6vq?file=/src/Expander.js)
 
 ## The problem
 
