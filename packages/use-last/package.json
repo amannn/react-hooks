@@ -1,6 +1,6 @@
 {
   "name": "use-last",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "A React hook to conditionally return the last value that has met a certain criteria.",
   "author": "Jan Amann <jan@amann.me>",
