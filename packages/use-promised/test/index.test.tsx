@@ -7,7 +7,7 @@ const API = {
     return Promise.resolve('Thank you for your feedback!');
   },
   triggerError() {
-    return Promise.reject('Please login first.');
+    return Promise.reject(new Error('Please login first.'));
   }
 };
 
@@ -31,6 +31,11 @@ function FeedbackForm() {
         Trigger error
       </button>
       <p>State: {promise.state}</p>
+
+      {/* Direct access without checking a state variable first */}
+      <p>{promise.result}</p>
+
+      {/* Assessing the state before checking state-specific properties */}
       {promise.fulfilled && <p>Result: {promise.result}</p>}
       {promise.rejected && <p>Error: {promise.error.message}</p>}
     </>
