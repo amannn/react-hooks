@@ -12,7 +12,7 @@ const API = {
 };
 
 function FeedbackForm() {
-  const [promise, setPromise] = usePromised<string>();
+  const [promise, setPromise] = usePromised<string, Error>();
 
   function onSubmit() {
     setPromise(API.submitFeedback());
@@ -32,7 +32,7 @@ function FeedbackForm() {
       </button>
       <p>State: {promise.state}</p>
       {promise.fulfilled && <p>Result: {promise.result}</p>}
-      {promise.rejected && <p>Error: {promise.error}</p>}
+      {promise.rejected && <p>Error: {promise.error.message}</p>}
     </>
   );
 }
