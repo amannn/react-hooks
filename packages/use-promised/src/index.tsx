@@ -14,6 +14,8 @@ export type PromiseData<ResultType, ErrorType> =
       pending: false;
       rejected: false;
       fulfilled: false;
+      result: undefined;
+      error: undefined;
     }
   | {
       state: PromiseState.PENDING;
@@ -21,6 +23,8 @@ export type PromiseData<ResultType, ErrorType> =
       pending: true;
       rejected: false;
       fulfilled: false;
+      result: undefined;
+      error: undefined;
     }
   | {
       state: PromiseState.REJECTED;
@@ -28,6 +32,7 @@ export type PromiseData<ResultType, ErrorType> =
       pending: false;
       rejected: true;
       fulfilled: false;
+      result: undefined;
       error: ErrorType;
     }
   | {
@@ -37,6 +42,7 @@ export type PromiseData<ResultType, ErrorType> =
       rejected: false;
       fulfilled: true;
       result: ResultType;
+      error: undefined;
     };
 
 export default function usePromised<Result = unknown, Error = unknown>(): [
@@ -49,7 +55,9 @@ export default function usePromised<Result = unknown, Error = unknown>(): [
     idle: true,
     pending: false,
     rejected: false,
-    fulfilled: false
+    fulfilled: false,
+    error: undefined,
+    result: undefined
   });
 
   useEffect(() => {
@@ -61,7 +69,9 @@ export default function usePromised<Result = unknown, Error = unknown>(): [
         idle: false,
         pending: true,
         rejected: false,
-        fulfilled: false
+        fulfilled: false,
+        error: undefined,
+        result: undefined
       });
 
       promise
@@ -74,7 +84,8 @@ export default function usePromised<Result = unknown, Error = unknown>(): [
             pending: false,
             rejected: false,
             fulfilled: true,
-            result: receivedResult
+            result: receivedResult,
+            error: undefined
           });
         })
         .catch((receivedError) => {
@@ -86,7 +97,8 @@ export default function usePromised<Result = unknown, Error = unknown>(): [
             pending: false,
             rejected: true,
             fulfilled: false,
-            error: receivedError
+            error: receivedError,
+            result: undefined
           });
         });
     } else {
@@ -95,7 +107,9 @@ export default function usePromised<Result = unknown, Error = unknown>(): [
         idle: true,
         pending: false,
         rejected: false,
-        fulfilled: false
+        fulfilled: false,
+        result: undefined,
+        error: undefined
       });
     }
 

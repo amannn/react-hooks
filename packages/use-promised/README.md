@@ -56,7 +56,7 @@ This is a custom hook that attempts to remove all the complexity that comes with
 - Feels like synchronous programming – no `useEffect`.
 - Pending requests are canceled when they are interrupted by another request.
 - Impossible states like having a result and error simultaneously are prevented.
-- When you're using TypeScript you'll benefit from additional guardrails like requiring a check for if the promise has rejected before being able to access the error.
+- When you're using TypeScript you'll benefit from additional guardrails.
 - If your asynchronous callback reaches through multiple levels of components, you can subscribe to the promise result right on the level where you need it – no need to pass down a loading and error state. If desired, you can subscribe in multiple components at the same time.
 
 ## Example
