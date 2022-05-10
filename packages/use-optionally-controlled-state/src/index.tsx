@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useCallback, useRef} from 'react';
 import useConstant from 'use-constant';
 
 /**
@@ -39,10 +39,15 @@ export default function useOptionallyControlledState<Value>({
 
   const value = isControlled ? controlledValue : stateValue;
 
-  function onValueChange(nextValue: Value) {
-    if (!isControlled) setStateValue(nextValue);
-    if (onChange) onChange(nextValue);
-  }
+  const isControlledRef = useRef(false);
+  isControlledRef.current = isControlled;
+  const onValueChange = useCallback(
+    (nextValue: Value) => {
+      if (!isControlledRef.current) setStateValue(nextValue);
+      if (onChange) onChange(nextValue);
+    },
+    [onChange]
+  );
 
   return [value, onValueChange];
 }
