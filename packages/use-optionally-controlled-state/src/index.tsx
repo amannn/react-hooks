@@ -1,6 +1,18 @@
 import {useState, useCallback, useRef} from 'react';
 import useConstant from 'use-constant';
 
+export type OptionalState<Value> =
+  | {
+      controlledValue?: Value;
+      initialValue: Value;
+      onChange?(value: Value): void;
+    }
+  | {
+      controlledValue: Value;
+      initialValue?: Value;
+      onChange?(value: Value): void;
+    };
+
 /**
  * Enables a component state to be either controlled or uncontrolled.
  */
@@ -8,16 +20,12 @@ export default function useOptionallyControlledState<Value>({
   controlledValue,
   initialValue,
   onChange
-}: {
-  controlledValue?: Value;
-  initialValue?: Value;
-  onChange?(value: Value): void;
-}): [Value | undefined, (value: Value) => void] {
+}: OptionalState<Value>): [Value, (value: Value) => void] {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
   const [stateValue, setStateValue] = useState(initialValue);
 
-  if (__DEV__) {
+  if (typeof __DEV__ !== 'undefined' && __DEV__) {
     if (initialValue === undefined && controlledValue === undefined) {
       throw new Error(
         'Either an initial or a controlled value should be provided.'
@@ -37,7 +45,7 @@ export default function useOptionallyControlledState<Value>({
     }
   }
 
-  const value = isControlled ? controlledValue : stateValue;
+  const value = isControlled ? controlledValue : (stateValue as Value);
 
   const isControlledRef = useRef(false);
   isControlledRef.current = isControlled;
