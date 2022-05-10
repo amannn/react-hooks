@@ -47,14 +47,12 @@ export default function useOptionallyControlledState<Value>({
 
   const value = isControlled ? controlledValue : (stateValue as Value);
 
-  const isControlledRef = useRef(false);
-  isControlledRef.current = isControlled;
   const onValueChange = useCallback(
     (nextValue: Value) => {
-      if (!isControlledRef.current) setStateValue(nextValue);
+      if (!isControlled) setStateValue(nextValue);
       if (onChange) onChange(nextValue);
     },
-    [onChange]
+    [onChange, isControlled]
   );
 
   return [value, onValueChange];
