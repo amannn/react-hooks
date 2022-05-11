@@ -1,7 +1,7 @@
-import {useState, useCallback, useRef} from 'react';
+import {useState, useCallback} from 'react';
 import useConstant from 'use-constant';
 
-export type OptionalState<Value> =
+type Options<Value> =
   | {
       controlledValue?: Value;
       initialValue: Value;
@@ -20,12 +20,12 @@ export default function useOptionallyControlledState<Value>({
   controlledValue,
   initialValue,
   onChange
-}: OptionalState<Value>): [Value, (value: Value) => void] {
+}: Options<Value>): [Value, (value: Value) => void] {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
   const [stateValue, setStateValue] = useState(initialValue);
 
-  if (typeof __DEV__ !== 'undefined' && __DEV__) {
+  if (__DEV__) {
     if (initialValue === undefined && controlledValue === undefined) {
       throw new Error(
         'Either an initial or a controlled value should be provided.'
@@ -45,7 +45,8 @@ export default function useOptionallyControlledState<Value>({
     }
   }
 
-  const value = isControlled ? controlledValue : (stateValue as Value);
+  // Options type ensures that at either controlledValue or stateValue has a value
+  const value = (isControlled ? controlledValue : stateValue)!;
 
   const onValueChange = useCallback(
     (nextValue: Value) => {
