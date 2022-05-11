@@ -1,5 +1,17 @@
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import useConstant from 'use-constant';
+
+type Options<Value> =
+  | {
+      controlledValue?: Value;
+      initialValue: Value;
+      onChange?(value: Value): void;
+    }
+  | {
+      controlledValue: Value;
+      initialValue?: Value;
+      onChange?(value: Value): void;
+    };
 
 /**
  * Enables a component state to be either controlled or uncontrolled.
@@ -8,11 +20,7 @@ export default function useOptionallyControlledState<Value>({
   controlledValue,
   initialValue,
   onChange
-}: {
-  controlledValue?: Value;
-  initialValue?: Value;
-  onChange?(value: Value): void;
-}): [Value | undefined, (value: Value) => void] {
+}: Options<Value>): [Value, (value: Value) => void] {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
   const [stateValue, setStateValue] = useState(initialValue);
@@ -37,12 +45,16 @@ export default function useOptionallyControlledState<Value>({
     }
   }
 
-  const value = isControlled ? controlledValue : stateValue;
+  // Options type ensures that either `controlledValue` or `stateValue` is defined
+  const value = (isControlled ? controlledValue : stateValue)!;
 
-  function onValueChange(nextValue: Value) {
-    if (!isControlled) setStateValue(nextValue);
-    if (onChange) onChange(nextValue);
-  }
+  const onValueChange = useCallback(
+    (nextValue: Value) => {
+      if (!isControlled) setStateValue(nextValue);
+      if (onChange) onChange(nextValue);
+    },
+    [onChange, isControlled]
+  );
 
   return [value, onValueChange];
 }
