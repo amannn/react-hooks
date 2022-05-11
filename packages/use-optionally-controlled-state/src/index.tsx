@@ -45,7 +45,7 @@ export default function useOptionallyControlledState<Value>({
     }
   }
 
-  // Options type ensures that at either controlledValue or stateValue has a value
+  // Options type ensures that either `controlledValue` or `stateValue` is defined
   const value = (isControlled ? controlledValue : stateValue)!;
 
   const onValueChange = useCallback(
