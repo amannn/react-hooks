@@ -16,7 +16,14 @@ export default function useOptionallyControlledState<
   controlledValue?: ControlledValue;
   initialValue?: InitialValue;
   onChange?(value: Value): void;
-}): [Value, (value: Value) => void] {
+}): [
+  undefined extends ControlledValue
+    ? undefined extends InitialValue
+      ? Value | undefined
+      : Value
+    : Value,
+  (value: Value) => void
+] {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
   const [stateValue, setStateValue] = useState<Value | undefined>(
