@@ -1,50 +1,27 @@
 import {useState, useCallback} from 'react';
 import useConstant from 'use-constant';
 
-// Controlled
-export default function useOptionallyControlledState<Value>({
-  controlledValue,
-  initialValue,
-  onChange
-}: {
-  controlledValue: Value;
-  initialValue?: Value;
-  onChange?(value: Value): void;
-}): [Value, (value: Value) => void];
-
-// Uncontrolled without initial value
-export default function useOptionallyControlledState<Value>({
-  controlledValue,
-  initialValue,
-  onChange
-}: {
-  controlledValue?: Value;
-  initialValue?: Value;
-  onChange?(value: Value): void;
-}): [Value | undefined, (value: Value) => void];
-
-// Uncontrolled with initial value
-export default function useOptionallyControlledState<Value>({
-  controlledValue,
-  initialValue,
-  onChange
-}: {
-  controlledValue?: Value;
-  initialValue: Value;
-  onChange?(value: Value): void;
-}): [Value, (value: Value) => void];
-
 /**
  * Enables a component state to be either controlled or uncontrolled.
  */
-export default function useOptionallyControlledState<Value>({
+export default function useOptionallyControlledState<
+  ControlledValue,
+  InitialValue,
+  Value = undefined extends ControlledValue ? InitialValue : ControlledValue
+>({
   controlledValue,
   initialValue,
   onChange
-}: any) {
+}: {
+  controlledValue?: ControlledValue;
+  initialValue?: InitialValue;
+  onChange?(value: Value): void;
+}): [Value, (value: Value) => void] {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
-  const [stateValue, setStateValue] = useState<Value>(initialValue);
+  const [stateValue, setStateValue] = useState<Value | undefined>(
+    initialValue as Value | undefined
+  );
 
   if (__DEV__) {
     if (initialIsControlled && !isControlled) {
@@ -68,8 +45,8 @@ export default function useOptionallyControlledState<Value>({
       if (!isControlled) setStateValue(nextValue);
       if (onChange) onChange(nextValue);
     },
-    [onChange, isControlled]
+    [isControlled, onChange]
   );
 
-  return [value, onValueChange];
+  return [value as Value, onValueChange];
 }

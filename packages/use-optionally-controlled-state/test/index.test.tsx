@@ -115,6 +115,20 @@ it('throws when switching from controlled to uncontrolled mode', () => {
  * Type signature tests
  */
 
+function TestTypes() {
+  const controlled = useOptionallyControlledState({
+    controlledValue: true
+  });
+  const uncontrolledWithInitialValue = useOptionallyControlledState({
+    initialValue: true
+  });
+  const uncontrolledWithoutInitialValue = useOptionallyControlledState({});
+
+  // Only used for type tests; mark the variables as used
+  // eslint-disable-next-line no-unused-expressions
+  [controlled, uncontrolledWithInitialValue, uncontrolledWithoutInitialValue];
+}
+
 // Expected return type: `[boolean, (value: boolean) => void]`
 function Controlled(opts: {controlledValue: boolean; initialValue?: boolean}) {
   const [value, setValue] = useOptionallyControlledState(opts);
@@ -144,9 +158,16 @@ function UncontrolledWithoutInitialValue(opts: {
   const [value, setValue] = useOptionallyControlledState(opts);
 
   setValue(true);
-  return value?.valueOf();
+
+  // @ts-expect-error This should be an error as the value can be undefined
+  return value.valueOf();
 }
 
 // Only used for type tests; mark the functions as used
 // eslint-disable-next-line no-unused-expressions
-[Controlled, UncontrolledWithInitialValue, UncontrolledWithoutInitialValue];
+[
+  TestTypes,
+  Controlled,
+  UncontrolledWithInitialValue,
+  UncontrolledWithoutInitialValue
+];
