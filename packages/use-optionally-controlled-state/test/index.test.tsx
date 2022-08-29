@@ -116,24 +116,35 @@ it('throws when switching from controlled to uncontrolled mode', () => {
  */
 
 // Expected return type: `[boolean, (value: boolean) => void]`
-function Controlled(opts: {controlledValue: boolean; intialValue?: boolean}) {
-  return useOptionallyControlledState(opts)[0].valueOf();
+function Controlled(opts: {controlledValue: boolean; initialValue?: boolean}) {
+  const [value, setValue] = useOptionallyControlledState(opts);
+
+  setValue(true);
+  return value.valueOf();
 }
 
 // Expected return type: `[boolean, (value: boolean) => void]`
 function UncontrolledWithInitialValue(opts: {
   controlledValue?: boolean;
-  intialValue: boolean;
+  initialValue: boolean;
 }) {
-  return useOptionallyControlledState(opts)[0].valueOf();
+  const [value, setValue] = useOptionallyControlledState(opts);
+
+  setValue(true);
+  return value.valueOf();
 }
 
 // Expected return type: `[boolean | undefined, (value: boolean) => void]`
 function UncontrolledWithoutInitialValue(opts: {
   controlledValue?: boolean;
-  intialValue?: boolean;
+  initialValue?: boolean;
 }) {
-  return useOptionallyControlledState(opts)[0]?.valueOf();
+  // False positive, probably need to upgrade ESLint
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [value, setValue] = useOptionallyControlledState(opts);
+
+  setValue(true);
+  return value?.valueOf();
 }
 
 // Only used for type tests; mark the functions as used
