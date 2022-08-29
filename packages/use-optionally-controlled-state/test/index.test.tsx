@@ -66,6 +66,20 @@ it('supports an uncontrolled mode', () => {
   screen.getByText('Children');
 });
 
+it('supports an uncontrolled mode with no initial value', () => {
+  const onChange = jest.fn();
+
+  render(<Expander onChange={onChange} />);
+  expect(screen.queryByText('Children')).toBe(null);
+  fireEvent.click(screen.getByText('Toggle'));
+  expect(onChange).toHaveBeenLastCalledWith(true);
+
+  screen.getByText('Children');
+  fireEvent.click(screen.getByText('Toggle'));
+  expect(onChange).toHaveBeenLastCalledWith(false);
+  expect(screen.queryByText('Children')).toBe(null);
+});
+
 it('allows to use an initial value without a change handler', () => {
   // Maybe the value is read from the DOM directly
   render(<Expander initialExpanded />);
@@ -79,12 +93,6 @@ it('allows using a controlled value without a change handler', () => {
 it('uses the controlled value when both a controlled as well as an initial value is provided', () => {
   render(<Expander expanded initialExpanded={false} />);
   screen.getByText('Children');
-});
-
-it('throws when neither a controlled nor an initial value is provided', () => {
-  expect(() => render(<Expander />)).toThrow(
-    'Either an initial or a controlled value should be provided.'
-  );
 });
 
 it('throws when switching from uncontrolled to controlled mode', () => {
@@ -102,3 +110,32 @@ it('throws when switching from controlled to uncontrolled mode', () => {
     /Can not change from controlled to uncontrolled mode./
   );
 });
+
+/**
+ * Type signature tests
+ */
+
+// Expected return type: `[boolean, (value: boolean) => void]`
+function Controlled(opts: {controlledValue: boolean; intialValue?: boolean}) {
+  return useOptionallyControlledState(opts)[0].valueOf();
+}
+
+// Expected return type: `[boolean, (value: boolean) => void]`
+function UncontrolledWithInitialValue(opts: {
+  controlledValue?: boolean;
+  intialValue: boolean;
+}) {
+  return useOptionallyControlledState(opts)[0].valueOf();
+}
+
+// Expected return type: `[boolean | undefined, (value: boolean) => void]`
+function UncontrolledWithoutInitialValue(opts: {
+  controlledValue?: boolean;
+  intialValue?: boolean;
+}) {
+  return useOptionallyControlledState(opts)[0]?.valueOf();
+}
+
+// Only used for type tests; mark the functions as used
+// eslint-disable-next-line no-unused-expressions
+[Controlled, UncontrolledWithInitialValue, UncontrolledWithoutInitialValue];
