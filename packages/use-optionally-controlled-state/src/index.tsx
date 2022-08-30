@@ -1,34 +1,42 @@
 import {useState, useCallback} from 'react';
 import useConstant from 'use-constant';
 
+// Controlled
+export default function useOptionallyControlledState<Value>(opts: {
+  controlledValue: Value;
+  initialValue?: Value | undefined;
+  onChange?(value: Value): void;
+}): [Value, (value: Value) => void];
+
+// Uncontrolled with initial value
+export default function useOptionallyControlledState<Value>(opts: {
+  controlledValue?: Value | undefined;
+  initialValue: Value;
+  onChange?(value: Value): void;
+}): [Value | undefined, (value: Value) => void];
+
+// Uncontrolled without initial value
+export default function useOptionallyControlledState<Value>(opts: {
+  controlledValue?: Value | undefined;
+  initialValue?: Value;
+  onChange?(value: Value): void;
+}): [Value | undefined, (value: Value) => void];
+
 /**
  * Enables a component state to be either controlled or uncontrolled.
  */
-export default function useOptionallyControlledState<
-  ControlledValue,
-  InitialValue,
-  Value = undefined extends ControlledValue ? InitialValue : ControlledValue
->({
+export default function useOptionallyControlledState<Value>({
   controlledValue,
   initialValue,
   onChange
 }: {
-  controlledValue?: ControlledValue;
-  initialValue?: InitialValue;
+  controlledValue?: Value | undefined;
+  initialValue?: Value | undefined;
   onChange?(value: Value): void;
-}): [
-  undefined extends ControlledValue
-    ? undefined extends InitialValue
-      ? Value | undefined
-      : Value
-    : Value,
-  (value: Value) => void
-] {
+}) {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
-  const [stateValue, setStateValue] = useState<Value | undefined>(
-    initialValue as Value | undefined
-  );
+  const [stateValue, setStateValue] = useState(initialValue);
 
   if (__DEV__) {
     if (initialIsControlled && !isControlled) {
@@ -55,5 +63,5 @@ export default function useOptionallyControlledState<
     [isControlled, onChange]
   );
 
-  return [value as Value, onValueChange];
+  return [value, onValueChange];
 }

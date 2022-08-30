@@ -119,10 +119,19 @@ function TestTypes() {
   const controlled = useOptionallyControlledState({
     controlledValue: true
   });
+  controlled[0].valueOf();
+
   const uncontrolledWithInitialValue = useOptionallyControlledState({
     initialValue: true
   });
-  const uncontrolledWithoutInitialValue = useOptionallyControlledState({});
+  // @ts-expect-error Null-check would be necessary
+  uncontrolledWithInitialValue[0].valueOf();
+
+  const uncontrolledWithoutInitialValue = useOptionallyControlledState<boolean>(
+    {}
+  );
+  // @ts-expect-error Null-check would be necessary
+  uncontrolledWithoutInitialValue[0].valueOf();
 
   // Only used for type tests; mark the variables as used
   // eslint-disable-next-line no-unused-expressions
@@ -137,7 +146,9 @@ function Controlled(opts: {controlledValue: boolean; initialValue?: boolean}) {
   return value.valueOf();
 }
 
-// Expected return type: `[boolean, (value: boolean) => void]`
+// Expected return type: `[boolean | undefined, (value: boolean) => void]`
+// Note that theoretically `undefined` shouldn't be possible here,
+// but the types seem to be quite hard to get right.
 function UncontrolledWithInitialValue(opts: {
   controlledValue?: boolean;
   initialValue: boolean;
@@ -145,6 +156,8 @@ function UncontrolledWithInitialValue(opts: {
   const [value, setValue] = useOptionallyControlledState(opts);
 
   setValue(true);
+
+  // @ts-expect-error Null-check would be necessary
   return value.valueOf();
 }
 
@@ -153,13 +166,11 @@ function UncontrolledWithoutInitialValue(opts: {
   controlledValue?: boolean;
   initialValue?: boolean;
 }) {
-  // False positive, probably need to upgrade ESLint
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, setValue] = useOptionallyControlledState(opts);
 
   setValue(true);
 
-  // @ts-expect-error This should be an error as the value can be undefined
+  // @ts-expect-error Null-check would be necessary
   return value.valueOf();
 }
 
