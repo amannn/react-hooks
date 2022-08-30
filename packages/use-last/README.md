@@ -2,38 +2,45 @@
 
 [![Stable release](https://img.shields.io/npm/v/use-last.svg)](https://npm.im/use-last)
 
-A React hook to conditionally return the last value that has met a certain criteria.
+> A React hook to conditionally return the last value that has met a certain criteria.
 
-## The problem
-
-You have a React component that has a state or prop that changes over time, but you want to conditionally skip some values.
-
-## This solution
-
-A hook that returns the latest value that meets the specified condition.
+This is useful when you have a React component that has a state or prop that changes over time, but you want to conditionally skip some values.
 
 ## Example
 
 **Implementation:**
 
 ```jsx
-function LastEvenValue({value}) {
-  const evenValue = useLast(value, value % 2 === 0);
-  return <p>{evenValue}</p>;
+import useLast from 'use-last';
+
+function LastValue({value}) {
+  const lastDefinedValue = useLast(value);
+  return <p>{lastDefinedValue}</p>;
 }
 ```
 
 **Usage:**
 
 ```jsx
-// Rendered
-<LastEvenValue value={2} />
+// Renders "2"
+<LastValue value={2} />
 
-// Skipped, still rendering "2"
-<LastEvenValue value={3} />
+// Still renders "2"
+<LastValue value={undefined} />
 
-// Rendered
-<LastEvenValue value={4} />
+// Renders "4"
+<LastValue value={4} />
 ```
 
-The second parameter is optional and defaults to `value !== undefined`, i.e. undefined values are ignored.
+## Configuration
+
+By default, `value` is checked for being `!== undefined`. You can provide a second argument to customize this condition:
+
+```jsx
+import useLast from 'use-last';
+
+function LastEvenValue({value}) {
+  const lastEvenValue = useLast(value, value % 2 === 0);
+  return <p>{lastEvenValue}</p>;
+}
+```
