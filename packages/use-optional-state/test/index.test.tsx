@@ -127,9 +127,7 @@ function TestTypes() {
   // @ts-expect-error Null-check would be necessary
   uncontrolledWithInitialValue[0].valueOf();
 
-  const uncontrolledWithoutInitialValue = useOptionalState<boolean>(
-    {}
-  );
+  const uncontrolledWithoutInitialValue = useOptionalState<boolean>({});
   // @ts-expect-error Null-check would be necessary
   uncontrolledWithoutInitialValue[0].valueOf();
 
