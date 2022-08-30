@@ -1,6 +1,6 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import * as React from 'react';
-import useOptionallyControlledState from '../src';
+import useOptionalState from '../src';
 
 (global as any).__DEV__ = true;
 
@@ -15,7 +15,7 @@ function Expander({
   initialExpanded,
   onChange
 }: Props) {
-  const [expanded, setExpanded] = useOptionallyControlledState({
+  const [expanded, setExpanded] = useOptionalState({
     controlledValue: controlledExpanded,
     initialValue: initialExpanded,
     onChange
@@ -116,18 +116,18 @@ it('throws when switching from controlled to uncontrolled mode', () => {
  */
 
 function TestTypes() {
-  const controlled = useOptionallyControlledState({
+  const controlled = useOptionalState({
     controlledValue: true
   });
   controlled[0].valueOf();
 
-  const uncontrolledWithInitialValue = useOptionallyControlledState({
+  const uncontrolledWithInitialValue = useOptionalState({
     initialValue: true
   });
   // @ts-expect-error Null-check would be necessary
   uncontrolledWithInitialValue[0].valueOf();
 
-  const uncontrolledWithoutInitialValue = useOptionallyControlledState<boolean>(
+  const uncontrolledWithoutInitialValue = useOptionalState<boolean>(
     {}
   );
   // @ts-expect-error Null-check would be necessary
@@ -140,7 +140,7 @@ function TestTypes() {
 
 // Expected return type: `[boolean, (value: boolean) => void]`
 function Controlled(opts: {controlledValue: boolean; initialValue?: boolean}) {
-  const [value, setValue] = useOptionallyControlledState(opts);
+  const [value, setValue] = useOptionalState(opts);
 
   setValue(true);
   return value.valueOf();
@@ -153,7 +153,7 @@ function UncontrolledWithInitialValue(opts: {
   controlledValue?: boolean;
   initialValue: boolean;
 }) {
-  const [value, setValue] = useOptionallyControlledState(opts);
+  const [value, setValue] = useOptionalState(opts);
 
   setValue(true);
 
@@ -166,7 +166,7 @@ function UncontrolledWithoutInitialValue(opts: {
   controlledValue?: boolean;
   initialValue?: boolean;
 }) {
-  const [value, setValue] = useOptionallyControlledState(opts);
+  const [value, setValue] = useOptionalState(opts);
 
   setValue(true);
 

@@ -2,21 +2,21 @@ import {useState, useCallback} from 'react';
 import useConstant from 'use-constant';
 
 // Controlled
-export default function useOptionallyControlledState<Value>(opts: {
+export default function useOptionalState<Value>(opts: {
   controlledValue: Value;
   initialValue?: Value | undefined;
   onChange?(value: Value): void;
 }): [Value, (value: Value) => void];
 
 // Uncontrolled with initial value
-export default function useOptionallyControlledState<Value>(opts: {
+export default function useOptionalState<Value>(opts: {
   controlledValue?: Value | undefined;
   initialValue: Value;
   onChange?(value: Value): void;
 }): [Value | undefined, (value: Value) => void];
 
 // Uncontrolled without initial value
-export default function useOptionallyControlledState<Value>(opts: {
+export default function useOptionalState<Value>(opts: {
   controlledValue?: Value | undefined;
   initialValue?: Value;
   onChange?(value: Value): void;
@@ -25,7 +25,7 @@ export default function useOptionallyControlledState<Value>(opts: {
 /**
  * Enables a component state to be either controlled or uncontrolled.
  */
-export default function useOptionallyControlledState<Value>({
+export default function useOptionalState<Value>({
   controlledValue,
   initialValue,
   onChange

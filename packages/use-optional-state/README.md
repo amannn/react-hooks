@@ -1,6 +1,6 @@
-# use-optionally-controlled-state
+# use-optional-state
 
-[![Stable release](https://img.shields.io/npm/v/use-optionally-controlled-state.svg)](https://npm.im/use-optionally-controlled-state)
+[![Stable release](https://img.shields.io/npm/v/use-optional-state.svg)](https://npm.im/use-optional-state)
 
 A React hook to enable a component state to either be controlled or uncontrolled.
 
@@ -18,21 +18,21 @@ When implementing a component, it's sometimes hard to choose one or the other si
 
 This hook helps you to support both patterns in your components, increasing flexibility while also ensuring ease of use.
 
-Since the solution can be applied on a per-prop basis, you can even enable this behaviour for multiple props that are orthogonal (e.g. a `<Prompt isOpen inputValue="" />` component).
+Since the solution can be applied on a per-prop basis, you can also enable this behaviour for multiple props that are orthogonal (e.g. a `<Prompt isOpen inputValue="" />` component).
 
 ## Example
 
 **Implementation:**
 
 ```jsx
-import useOptionallyControlledState from 'use-optionally-controlled-state';
+import useOptionalState from 'use-optional-state';
 
 function Expander({
   expanded: controlledExpanded,
   initialExpanded = false,
   onChange
 }) {
-  const [expanded, setExpanded] = useOptionallyControlledState({
+  const [expanded, setExpanded] = useOptionalState({
     controlledValue: controlledExpanded,
     initialValue: initialExpanded,
     onChange
