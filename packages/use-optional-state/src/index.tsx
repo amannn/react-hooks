@@ -1,37 +1,44 @@
 import {useState, useCallback} from 'react';
 import useConstant from 'use-constant';
 
-type Options<Value> =
-  | {
-      controlledValue?: Value;
-      initialValue: Value;
-      onChange?(value: Value): void;
-    }
-  | {
-      controlledValue: Value;
-      initialValue?: Value;
-      onChange?(value: Value): void;
-    };
+// Controlled
+export default function useOptionalState<Value>(opts: {
+  controlledValue: Value;
+  initialValue?: Value | undefined;
+  onChange?(value: Value): void;
+}): [Value, (value: Value) => void];
+
+// Uncontrolled with initial value
+export default function useOptionalState<Value>(opts: {
+  controlledValue?: Value | undefined;
+  initialValue: Value;
+  onChange?(value: Value): void;
+}): [Value | undefined, (value: Value) => void];
+
+// Uncontrolled without initial value
+export default function useOptionalState<Value>(opts: {
+  controlledValue?: Value | undefined;
+  initialValue?: Value;
+  onChange?(value: Value): void;
+}): [Value | undefined, (value: Value) => void];
 
 /**
  * Enables a component state to be either controlled or uncontrolled.
  */
-export default function useOptionallyControlledState<Value>({
+export default function useOptionalState<Value>({
   controlledValue,
   initialValue,
   onChange
-}: Options<Value>): [Value, (value: Value) => void] {
+}: {
+  controlledValue?: Value | undefined;
+  initialValue?: Value | undefined;
+  onChange?(value: Value): void;
+}) {
   const isControlled = controlledValue !== undefined;
   const initialIsControlled = useConstant(() => isControlled);
   const [stateValue, setStateValue] = useState(initialValue);
 
   if (__DEV__) {
-    if (initialValue === undefined && controlledValue === undefined) {
-      throw new Error(
-        'Either an initial or a controlled value should be provided.'
-      );
-    }
-
     if (initialIsControlled && !isControlled) {
       throw new Error(
         'Can not change from controlled to uncontrolled mode. If `undefined` needs to be used for controlled values, please use `null` instead.'
@@ -45,15 +52,14 @@ export default function useOptionallyControlledState<Value>({
     }
   }
 
-  // Options type ensures that either `controlledValue` or `stateValue` is defined
-  const value = (isControlled ? controlledValue : stateValue)!;
+  const value = isControlled ? controlledValue : stateValue;
 
   const onValueChange = useCallback(
     (nextValue: Value) => {
       if (!isControlled) setStateValue(nextValue);
       if (onChange) onChange(nextValue);
     },
-    [onChange, isControlled]
+    [isControlled, onChange]
   );
 
   return [value, onValueChange];
