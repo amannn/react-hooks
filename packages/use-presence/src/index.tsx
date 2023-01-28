@@ -15,9 +15,9 @@ type SeparateTransitionConfig = {
 /**
  * Animates the appearance of its children.
  */
-export default function usePresence(
+export default function usePresence<T>(
   /** Indicates whether the component that the resulting values will be used upon should be visible to the user. */
-  isVisible: boolean,
+  dataInput: T,
   opts: (
     | SharedTransitionConfig
     | SeparateTransitionConfig
@@ -27,6 +27,8 @@ export default function usePresence(
     initialEnter?: boolean;
   }
 ) {
+  const [data, setData] = useState(dataInput);
+  const [isVisible, setIsVisible] = useState(!!data);
   const exitTransitionDuration =
     'exitTransitionDuration' in opts
       ? opts.exitTransitionDuration
@@ -99,11 +101,28 @@ export default function usePresence(
     }
   }, [animateIsVisible, enterTransitionDuration, hasEntered]);
 
+  useEffect(() => {
+    if (data !== dataInput) {
+      if (isMounted) {
+        setIsVisible(false);
+      } else if (dataInput) {
+        // keep data & dataInput in sync when there is data
+        setData(dataInput);
+        setIsVisible(true);
+      }
+    } else if (!dataInput) {
+      setIsVisible(false);
+    } else if (!!data && !isMounted) {
+      setIsVisible(true);
+    }
+  }, [dataInput, data, isMounted]);
+
   return {
-    isMounted,
+    isMounted: isMounted && !!data,
     isVisible: animateIsVisible,
     isAnimating,
     isEntering,
-    isExiting
+    isExiting,
+    data
   };
 }
