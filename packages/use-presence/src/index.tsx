@@ -12,7 +12,7 @@ type SeparateTransitionConfig = {
   exitTransitionDuration: number;
 };
 
-type UsePresenceOptions = (
+export type UsePresenceOptions = (
   | SharedTransitionConfig
   | SeparateTransitionConfig
   | (SharedTransitionConfig & SeparateTransitionConfig)
@@ -110,7 +110,7 @@ export default function usePresence(
   };
 }
 
-type UseUniqueDataPresenceOptions<T> = {
+export type UseUniqueDataPresenceOptions<T> = {
   /** Check if two instances of type T are equal, defaults to a === comparison */
   equalityCheck?(a: T, b: T): boolean;
   /** Check if an instance of type T is considered valid to render, defaults to Boolean function */
@@ -134,7 +134,7 @@ export function useUniqueDataPresence<T>(
 ) {
   const [data, setData] = useState(dataInput);
   const [shouldBeMounted, setShouldBeMounted] = useState(validationCheck(data));
-  const {isMounted, isVisible} = usePresence(shouldBeMounted, opts);
+  const {isMounted, ...otherStates} = usePresence(shouldBeMounted, opts);
   useEffect(() => {
     if (!equalityCheck(data, dataInput)) {
       if (isMounted) {
@@ -157,5 +157,10 @@ export function useUniqueDataPresence<T>(
     equalityCheck
   ]);
 
-  return {isMounted: isMounted && validationCheck(data), isVisible, data};
+  return {
+    ...otherStates,
+    isMounted: isMounted && validationCheck(data),
+    isVisible,
+    data
+  };
 }
