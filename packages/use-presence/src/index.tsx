@@ -160,7 +160,6 @@ export function useUniqueDataPresence<T>(
   return {
     ...otherStates,
     isMounted: isMounted && validationCheck(data),
-    isVisible,
     data
   };
 }
