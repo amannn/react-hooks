@@ -15,9 +15,9 @@ type SeparateTransitionConfig = {
 /**
  * Animates the appearance of its children.
  */
-export default function usePresence<T>(
+export default function usePresence(
   /** Indicates whether the component that the resulting values will be used upon should be visible to the user. */
-  dataInput: T,
+  isVisible: boolean,
   opts: (
     | SharedTransitionConfig
     | SeparateTransitionConfig
@@ -27,8 +27,6 @@ export default function usePresence<T>(
     initialEnter?: boolean;
   }
 ) {
-  const [data, setData] = useState(dataInput);
-  const [isVisible, setIsVisible] = useState(!!data);
   const exitTransitionDuration =
     'exitTransitionDuration' in opts
       ? opts.exitTransitionDuration
@@ -101,28 +99,66 @@ export default function usePresence<T>(
     }
   }, [animateIsVisible, enterTransitionDuration, hasEntered]);
 
-  useEffect(() => {
-    if (data !== dataInput) {
-      if (isMounted) {
-        setIsVisible(false);
-      } else if (dataInput) {
-        // keep data & dataInput in sync when there is data
-        setData(dataInput);
-        setIsVisible(true);
-      }
-    } else if (!dataInput) {
-      setIsVisible(false);
-    } else if (!!data && !isMounted) {
-      setIsVisible(true);
-    }
-  }, [dataInput, data, isMounted]);
-
   return {
-    isMounted: isMounted && !!data,
+    isMounted,
     isVisible: animateIsVisible,
     isAnimating,
     isEntering,
-    isExiting,
-    data
+    isExiting
   };
+}
+
+type DataValidationConfig<T> = {
+  /** Check if two instances of type T are equal, defaults to a === comparison */
+  equalityCheck?(a: T, b: T): boolean;
+  /** Check if an instance of type T is considered valid to render, defaults to Boolean function */
+  validationCheck?(a: T): boolean;
+};
+
+function defaultEqualityCheck<T>(a: T, b: T) {
+  return a === b;
+}
+function defaultValidationCheck<T>(a: T) {
+  return Boolean(a);
+}
+
+export function useUniqueDataPresence<T>(
+  dataInput: T,
+  {
+    equalityCheck = defaultEqualityCheck,
+    validationCheck = defaultValidationCheck,
+    ...opts
+  }: DataValidationConfig<T> &
+    (
+      | SharedTransitionConfig
+      | SeparateTransitionConfig
+      | (SharedTransitionConfig & SeparateTransitionConfig)
+    )
+) {
+  const [data, setData] = useState(dataInput);
+  const [shouldBeMounted, setShouldBeMounted] = useState(validationCheck(data));
+  const {isMounted, isVisible} = usePresence(shouldBeMounted, opts);
+  useEffect(() => {
+    if (!equalityCheck(data, dataInput)) {
+      if (isMounted) {
+        setShouldBeMounted(false);
+      } else if (validationCheck(dataInput)) {
+        setData(dataInput);
+        setShouldBeMounted(true);
+      }
+    } else if (!validationCheck(dataInput)) {
+      setShouldBeMounted(false);
+    } else if (validationCheck(data)) {
+      setShouldBeMounted(true);
+    }
+  }, [
+    dataInput,
+    data,
+    shouldBeMounted,
+    isMounted,
+    validationCheck,
+    equalityCheck
+  ]);
+
+  return {isMounted: isMounted && validationCheck(data), isVisible, data};
 }
