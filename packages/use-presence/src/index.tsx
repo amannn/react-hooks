@@ -12,20 +12,22 @@ type SeparateTransitionConfig = {
   exitTransitionDuration: number;
 };
 
+type UsePresenceOptions = (
+  | SharedTransitionConfig
+  | SeparateTransitionConfig
+  | (SharedTransitionConfig & SeparateTransitionConfig)
+) & {
+  /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
+  initialEnter?: boolean;
+};
+
 /**
  * Animates the appearance of its children.
  */
 export default function usePresence(
   /** Indicates whether the component that the resulting values will be used upon should be visible to the user. */
   isVisible: boolean,
-  opts: (
-    | SharedTransitionConfig
-    | SeparateTransitionConfig
-    | (SharedTransitionConfig & SeparateTransitionConfig)
-  ) & {
-    /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
-    initialEnter?: boolean;
-  }
+  opts: UsePresenceOptions
 ) {
   const exitTransitionDuration =
     'exitTransitionDuration' in opts
@@ -108,12 +110,12 @@ export default function usePresence(
   };
 }
 
-type DataValidationConfig<T> = {
+type UseUniqueDataPresenceOptions<T> = {
   /** Check if two instances of type T are equal, defaults to a === comparison */
   equalityCheck?(a: T, b: T): boolean;
   /** Check if an instance of type T is considered valid to render, defaults to Boolean function */
   validationCheck?(a: T): boolean;
-};
+} & UsePresenceOptions;
 
 function defaultEqualityCheck<T>(a: T, b: T) {
   return a === b;
@@ -128,12 +130,7 @@ export function useUniqueDataPresence<T>(
     equalityCheck = defaultEqualityCheck,
     validationCheck = defaultValidationCheck,
     ...opts
-  }: DataValidationConfig<T> &
-    (
-      | SharedTransitionConfig
-      | SeparateTransitionConfig
-      | (SharedTransitionConfig & SeparateTransitionConfig)
-    )
+  }: UseUniqueDataPresenceOptions<T>
 ) {
   const [data, setData] = useState(dataInput);
   const [shouldBeMounted, setShouldBeMounted] = useState(validationCheck(data));
