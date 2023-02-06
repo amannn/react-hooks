@@ -12,22 +12,20 @@ type SeparateTransitionConfig = {
   exitTransitionDuration: number;
 };
 
-export type UsePresenceOptions = (
-  | SharedTransitionConfig
-  | SeparateTransitionConfig
-  | (SharedTransitionConfig & SeparateTransitionConfig)
-) & {
-  /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
-  initialEnter?: boolean;
-};
-
 /**
  * Animates the appearance of its children.
  */
 export default function usePresence(
   /** Indicates whether the component that the resulting values will be used upon should be visible to the user. */
   isVisible: boolean,
-  opts: UsePresenceOptions
+  opts: (
+    | SharedTransitionConfig
+    | SeparateTransitionConfig
+    | (SharedTransitionConfig & SeparateTransitionConfig)
+  ) & {
+    /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
+    initialEnter?: boolean;
+  }
 ) {
   const exitTransitionDuration =
     'exitTransitionDuration' in opts
@@ -107,59 +105,5 @@ export default function usePresence(
     isAnimating,
     isEntering,
     isExiting
-  };
-}
-
-export type UseUniqueDataPresenceOptions<T> = {
-  /** Check if two instances of type T are equal, defaults to a === comparison */
-  equalityCheck?(a: T, b: T): boolean;
-  /** Check if an instance of type T is considered valid to render, defaults to Boolean function */
-  validationCheck?(a: T): boolean;
-} & UsePresenceOptions;
-
-function defaultEqualityCheck<T>(a: T, b: T) {
-  return a === b;
-}
-function defaultValidationCheck<T>(a: T) {
-  return Boolean(a);
-}
-
-export function useUniqueDataPresence<T>(
-  dataInput: T,
-  {
-    equalityCheck = defaultEqualityCheck,
-    validationCheck = defaultValidationCheck,
-    ...opts
-  }: UseUniqueDataPresenceOptions<T>
-) {
-  const [data, setData] = useState(dataInput);
-  const [shouldBeMounted, setShouldBeMounted] = useState(validationCheck(data));
-  const {isMounted, ...otherStates} = usePresence(shouldBeMounted, opts);
-  useEffect(() => {
-    if (!equalityCheck(data, dataInput)) {
-      if (isMounted) {
-        setShouldBeMounted(false);
-      } else if (validationCheck(dataInput)) {
-        setData(dataInput);
-        setShouldBeMounted(true);
-      }
-    } else if (!validationCheck(dataInput)) {
-      setShouldBeMounted(false);
-    } else if (validationCheck(data)) {
-      setShouldBeMounted(true);
-    }
-  }, [
-    dataInput,
-    data,
-    shouldBeMounted,
-    isMounted,
-    validationCheck,
-    equalityCheck
-  ]);
-
-  return {
-    ...otherStates,
-    isMounted: isMounted && validationCheck(data),
-    data
   };
 }
