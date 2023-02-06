@@ -48,19 +48,13 @@ function Expander({
   );
 }
 
-function Component(
-  props: Omit<React.ComponentProps<typeof Expander>, 'children'>
-) {
-  return <Expander {...props}>Hello</Expander>;
-}
-
 it("can animate the exit and re-entrance of a component that has changed it's rendered data", async () => {
   const {getByTestId, getByText, rerender} = render(
-    <Component latestItem={{text: 'initial value'}} />
+    <Expander latestItem={{text: 'initial value'}} />
   );
   getByTestId('isVisible, isMounted');
   getByText('initial value');
-  rerender(<Component latestItem={{text: 're-assigned value'}} />);
+  rerender(<Expander latestItem={{text: 're-assigned value'}} />);
   getByTestId('isAnimating, isExiting, isMounted');
   getByText('initial value');
   await waitFor(() => getByTestId('isVisible, isMounted'));
