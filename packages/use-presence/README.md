@@ -82,6 +82,100 @@ const {
 )
 ```
 
+# Animating a switch-out between state values
+
+## The problem
+
+Another common animation challenge is the case where you have state that represents an item that you want to see switch out and be replaced with a new item. This can be tricky because you want to make sure that the old item remains available and rendered until it has fully transitioned out. However, when React states are updated there is no warning that would give you time to transition out before the new state has appeared.
+
+## This solution
+
+This package exports a secondary wrapper hook to the first which will give you the an instance of the state that should be rendered during transition periods.
+
+## Example
+
+```jsx
+const tabs = [
+  {
+    title: 'Tab 1',
+    content: 'Tab 1 content'
+  },
+  {
+    title: 'Tab 2',
+    content: 'Tab 2 content'
+  },
+  {
+    title: 'Tab 3',
+    content: 'Tab 3 content'
+  }
+];
+
+function Tabs() {
+  const [tabIndex, setTabIndex] = useState(0);
+
+  return (
+    <>
+      <div style={{display: 'flex', gap: '1rem'}}>
+        {tabs.map(({title}, index) => (
+          <button key={title} onClick={() => setTabIndex(index)} type="button">
+            {title}
+          </button>
+        ))}
+      </div>
+      <TabContent tab={tabs[tabIndex]} />
+    </>
+  );
+}
+
+function TabContent({tab, transitionDuration = 500}) {
+  const {isAnimating, isMounted, isVisible, mountedItem} = usePresenceSwitch(
+    tab,
+    {transitionDuration}
+  );
+
+  if (!isMounted) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        overflow: 'hidden',
+        maxHeight: 0,
+        opacity: 0,
+        transitionDuration: `${transitionDuration}ms`,
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        transitionProperty: 'max-height, opacity',
+        ...(isVisible && {
+          maxHeight: 500,
+          opacity: 1,
+          transitionTimingFunction: 'cubic-bezier(0.8, 0, 0.6, 1)'
+        }),
+        ...(isAnimating && {willChange: 'max-height, opacity'})
+      }}
+    >
+      {mountedItem.content}
+    </div>
+  );
+}
+```
+
+## API
+
+```tsx
+const {
+  /** The item that should currently be rendered with respect to your transition state. */
+  mountedItem,
+  /** Returns all other states that usePresence returns. */
+  ...renderingStates
+} = usePresence<ItemType>(
+  /** The item to be tracked. If `null` or `undefined`, the state will transition out and `isMounted` will become false. */
+  item: ItemType | null | undefined,
+  /** Extends the options for the underlying call to usePresence. */
+  opts: Parameters<typeof usePresence>[1]
+)
+```
+
 ## Related
 
 - [`AnimatePresence` of `framer-motion`](https://www.framer.com/docs/animate-presence/)
