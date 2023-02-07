@@ -1,35 +1,35 @@
 import {useState, useEffect} from 'react';
 import usePresence from './use-presence';
 
-export function usePresenceSwitch<ItemType>(
-  latestItem: ItemType,
+export default function usePresenceSwitch<ItemType>(
+  item: ItemType,
   opts: Parameters<typeof usePresence>[1]
 ) {
-  const [item, setItem] = useState(latestItem);
+  const [mountedItem, setMountedItem] = useState(item);
   const [shouldBeMounted, setShouldBeMounted] = useState(!isNil(item));
   const {isMounted, ...otherStates} = usePresence(shouldBeMounted, opts);
   useEffect(() => {
-    if (item !== latestItem) {
+    if (mountedItem !== item) {
       if (isMounted) {
         setShouldBeMounted(false);
-      } else if (!isNil(latestItem)) {
-        setItem(latestItem);
+      } else if (!isNil(item)) {
+        setMountedItem(item);
         setShouldBeMounted(true);
       }
-    } else if (isNil(latestItem)) {
+    } else if (isNil(item)) {
       setShouldBeMounted(false);
-    } else if (!isNil(latestItem)) {
+    } else if (!isNil(item)) {
       setShouldBeMounted(true);
     }
-  }, [latestItem, item, shouldBeMounted, isMounted]);
+  }, [item, mountedItem, shouldBeMounted, isMounted]);
 
   return {
     ...otherStates,
-    isMounted: isMounted && !isNil(item),
-    item
+    isMounted: isMounted && !isNil(mountedItem),
+    mountedItem
   };
 }
 
 function isNil<ItemType>(value: ItemType) {
-  return value === null || value === undefined;
+  return value == null;
 }

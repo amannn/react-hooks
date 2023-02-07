@@ -1,5 +1,2 @@
-import usePresence from './use-presence';
-
-export * from './use-presence-switch';
-
-export default usePresence;
+export {default} from './use-presence';
+export {default as usePresenceSwitch} from './use-presence-switch';

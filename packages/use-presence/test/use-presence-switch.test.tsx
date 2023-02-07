@@ -4,14 +4,14 @@ import {usePresenceSwitch} from '../src';
 
 function Expander({
   initialEnter,
-  latestItem,
+  text,
   transitionDuration = 50
 }: {
   initialEnter?: boolean;
-  latestItem: {text: string};
+  text: string | null;
   transitionDuration?: number;
 }) {
-  const {item, ...values} = usePresenceSwitch(latestItem, {
+  const {mountedItem, ...values} = usePresenceSwitch(text, {
     transitionDuration,
     initialEnter
   });
@@ -24,7 +24,7 @@ function Expander({
 
   return (
     <div data-testid={testId}>
-      {isMounted && (
+      {isMounted ? (
         <div
           style={{
             overflow: 'hidden',
@@ -41,8 +41,10 @@ function Expander({
             ...(isAnimating && {willChange: 'max-height, opacity'})
           }}
         >
-          {item.text}
+          {mountedItem}
         </div>
+      ) : (
+        <div>Nothing mounted</div>
       )}
     </div>
   );
@@ -50,13 +52,28 @@ function Expander({
 
 it("can animate the exit and re-entrance of a component that has changed it's rendered data", async () => {
   const {getByTestId, getByText, rerender} = render(
-    <Expander latestItem={{text: 'initial value'}} />
+    <Expander text="initial value" />
   );
   getByTestId('isVisible, isMounted');
   getByText('initial value');
-  rerender(<Expander latestItem={{text: 're-assigned value'}} />);
+  rerender(<Expander text="re-assigned value" />);
   getByTestId('isAnimating, isExiting, isMounted');
   getByText('initial value');
   await waitFor(() => getByTestId('isVisible, isMounted'));
   getByText('re-assigned value');
+});
+
+it("can animate the initial entrance and exit of a component based on it's rendered data", async () => {
+  const {getByTestId, getByText, rerender} = render(<Expander text={null} />);
+  getByTestId('none');
+  getByText('Nothing mounted');
+  rerender(<Expander text="initial value" />);
+  getByTestId('isAnimating, isEntering, isMounted');
+  getByText('initial value');
+  await waitFor(() => getByTestId('isVisible, isMounted'));
+  rerender(<Expander text={null} />);
+  getByTestId('isAnimating, isExiting, isMounted');
+  getByText('initial value');
+  await waitFor(() => getByTestId('none'));
+  getByText('Nothing mounted');
 });
