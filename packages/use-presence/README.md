@@ -82,6 +82,89 @@ const {
 )
 ```
 
+## `usePresenceSwitch`
+
+If you have multiple items where only one is visible at a time, you can use the supplemental `usePresenceSwitch` hook to animate the items in and out. Previous items will exit before the next item transitions in.
+
+### API
+
+```tsx
+const {
+  /** The item that should currently be rendered. */
+  mountedItem,
+  /** Returns all other properties from `usePresence`. */
+  ...rest
+} = usePresence<ItemType>(
+  /** The current item that should be visible. If `undefined` is passed, the previous item will animate out. */
+  item: ItemType | undefined,
+  /** See the `opts` argument of `usePresence`. */
+  opts: Parameters<typeof usePresence>[1]
+)
+```
+
+### Example
+
+```jsx
+const tabs = [
+  {
+    title: 'Tab 1',
+    content: 'Tab 1 content'
+  },
+  {
+    title: 'Tab 2',
+    content: 'Tab 2 content'
+  },
+  {
+    title: 'Tab 3',
+    content: 'Tab 3 content'
+  },
+];
+
+function Tabs() {
+  const [tabIndex, setTabIndex] = useState(0);
+
+  return (
+    <>
+      {tabs.map((tab, index) => (
+        <button key={index} onClick={() => setTabIndex(index)} type="button">
+          {tab.title}
+        </button>
+      ))}
+      <TabContent>
+        {tabs[tabIndex].content}
+      </TabContent>
+    </>
+  );
+}
+
+function TabContent({ children, transitionDuration = 500 }) {
+  const {
+    isMounted,
+    isVisible,
+    mountedItem,
+  } = usePresenceSwitch(children, { transitionDuration });
+
+  if (!isMounted) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        opacity: 0,
+        transitionDuration: `${transitionDuration}ms`,
+        transitionProperty: 'opacity',
+        ...(isVisible && {
+          opacity: 1
+        })
+      }}
+    >
+      {mountedItem}
+    </div>
+  );
+}
+```
+
 ## Related
 
 - [`AnimatePresence` of `framer-motion`](https://www.framer.com/docs/animate-presence/)
