@@ -6,31 +6,27 @@ export default function usePresenceSwitch<ItemType>(
   opts: Parameters<typeof usePresence>[1]
 ) {
   const [mountedItem, setMountedItem] = useState(item);
-  const [shouldBeMounted, setShouldBeMounted] = useState(!isUndefined(item));
+  const [shouldBeMounted, setShouldBeMounted] = useState(item !== undefined);
   const {isMounted, ...rest} = usePresence(shouldBeMounted, opts);
 
   useEffect(() => {
     if (mountedItem !== item) {
       if (isMounted) {
         setShouldBeMounted(false);
-      } else if (!isUndefined(item)) {
+      } else if (item !== undefined) {
         setMountedItem(item);
         setShouldBeMounted(true);
       }
-    } else if (isUndefined(item)) {
+    } else if (item === undefined) {
       setShouldBeMounted(false);
-    } else if (!isUndefined(item)) {
+    } else if (item !== undefined) {
       setShouldBeMounted(true);
     }
   }, [item, mountedItem, shouldBeMounted, isMounted]);
 
   return {
     ...rest,
-    isMounted: isMounted && !isUndefined(mountedItem),
+    isMounted: isMounted && mountedItem !== undefined,
     mountedItem
   };
-}
-
-function isUndefined<ItemType>(value: ItemType) {
-  return value === undefined;
 }
