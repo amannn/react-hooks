@@ -22,6 +22,10 @@ function FeedbackForm() {
     setPromise(API.triggerError());
   }
 
+  function onReset() {
+    setPromise(undefined);
+  }
+
   return (
     <>
       <button disabled={promise.pending} onClick={onSubmit} type="button">
@@ -29,6 +33,9 @@ function FeedbackForm() {
       </button>
       <button onClick={onTriggerError} type="button">
         Trigger error
+      </button>
+      <button onClick={onReset} type="button">
+        Reset
       </button>
       <p>State: {promise.state}</p>
 
@@ -62,4 +69,26 @@ it('handles errors', async () => {
 
   await waitFor(() => screen.getByText(`State: ${PromiseState.REJECTED}`));
   screen.getByText('Error: Please login first.');
+});
+
+it('can reset the state', async () => {
+  render(<FeedbackForm />);
+  screen.getByText(`State: ${PromiseState.IDLE}`);
+
+  fireEvent.click(screen.getByText('Submit feedback'));
+  screen.getByText(`State: ${PromiseState.PENDING}`);
+
+  fireEvent.click(screen.getByText('Reset'));
+  screen.getByText(`State: ${PromiseState.IDLE}`);
+
+  // Make sure the resolved promise is ignored
+  await Promise.resolve();
+  screen.getByText(`State: ${PromiseState.IDLE}`);
+
+  fireEvent.click(screen.getByText('Submit feedback'));
+  screen.getByText(`State: ${PromiseState.PENDING}`);
+
+  await waitFor(() => screen.getByText(`State: ${PromiseState.FULFILLED}`));
+  fireEvent.click(screen.getByText('Reset'));
+  screen.getByText(`State: ${PromiseState.IDLE}`);
 });

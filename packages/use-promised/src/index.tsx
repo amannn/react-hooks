@@ -47,7 +47,7 @@ export type PromiseData<ResultType, ErrorType> =
 
 export default function usePromised<Result = unknown, Error = unknown>(): [
   PromiseData<Result, Error>,
-  (promise: Promise<Result>) => void
+  (promise: Promise<Result> | undefined) => void
 ] {
   const [promise, setPromise] = useState<Promise<Result>>();
   const [data, setData] = useState<PromiseData<Result, Error>>({
