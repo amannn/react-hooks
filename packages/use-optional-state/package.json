@@ -1,6 +1,6 @@
 {
   "name": "use-optional-state",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "MIT",
   "description": "A React hook to implement components that support both controlled and uncontrolled props.",
   "author": "Jan Amann <jan@amann.me>",
