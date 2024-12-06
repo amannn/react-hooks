@@ -5,7 +5,7 @@ import {useRef} from 'react';
  * By default the value is checked for `!== undefined`.
  */
 export default function useLast<Value>(value: Value, isValid?: boolean) {
-  const lastValueRef = useRef<Value>();
+  const lastValueRef = useRef<Value>(undefined);
 
   if (isValid === undefined) {
     isValid = value !== undefined;
