@@ -62,7 +62,7 @@ This is a custom hook that attempts to remove all the complexity that comes with
 ## Example
 
 ```jsx
-import usePromised, {PromiseState} from 'use-promised';
+import usePromised from 'use-promised';
 
 function FeedbackForm() {
   const [promise, setPromise] = usePromised();
