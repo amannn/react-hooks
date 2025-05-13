@@ -9580,10 +9580,10 @@ urix@^0.1.0:
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
-use-constant@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/use-constant/-/use-constant-1.1.0.tgz#76d36a0edf16d4cc8565361f522b55da5f8f3f22"
-  integrity sha512-yrflEfv7Xv/W8WlYV6nwRH01K+2BpR4cWxuzY03yPRjYZuHixhGlvnJN5O2bRYrXGpJ4zy8QjFABGIQ2QXeBOA==
+use-constant@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/use-constant/-/use-constant-2.0.0.tgz#4cd1dce61a9ad728058b17dc02b79d5fd642ef34"
+  integrity sha512-Oy0aPHFuM0mMzxQy3wAx1/VVCOWU2dW+88J03/VrkxmpI0XojeHsryCR/6MlnZydb5KKcwj1oS4rZNwdeVo1sg==
 
 use@^3.1.0:
   version "3.1.1"
