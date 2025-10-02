@@ -1,41 +1,18 @@
 import {useEffect, useState} from 'react';
 
-type SharedTransitionConfig = {
-  /** Duration in milliseconds used both for enter and exit transitions. */
-  transitionDuration: number;
-};
-
-type SeparateTransitionConfig = {
-  /** Duration in milliseconds used for enter transitions (overrides `transitionDuration` if provided). */
-  enterTransitionDuration: number;
-  /** Duration in milliseconds used for exit transitions (overrides `transitionDuration` if provided). */
-  exitTransitionDuration: number;
-};
-
 /**
  * Animates the appearance of its children.
  */
 export default function usePresence(
   /** Indicates whether the component that the resulting values will be used upon should be visible to the user. */
   isVisible: boolean,
-  opts: (
-    | SharedTransitionConfig
-    | SeparateTransitionConfig
-    | (SharedTransitionConfig & SeparateTransitionConfig)
-  ) & {
+  opts: {
+    /** Duration in milliseconds used both for enter and exit transitions. */
+    transitionDuration: number;
     /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
     initialEnter?: boolean;
   }
 ) {
-  const exitTransitionDuration =
-    'exitTransitionDuration' in opts
-      ? opts.exitTransitionDuration
-      : opts.transitionDuration;
-  const enterTransitionDuration =
-    'enterTransitionDuration' in opts
-      ? opts.enterTransitionDuration
-      : opts.transitionDuration;
-
   const initialEnter = opts.initialEnter ?? false;
   const [animateIsVisible, setAnimateIsVisible] = useState(
     initialEnter ? false : isVisible
@@ -61,13 +38,13 @@ export default function usePresence(
 
       const timeoutId = setTimeout(() => {
         setIsMounted(false);
-      }, exitTransitionDuration);
+      }, opts.transitionDuration);
 
       return () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [isVisible, exitTransitionDuration]);
+  }, [isVisible, opts.transitionDuration]);
 
   useEffect(() => {
     if (isVisible && isMounted && !animateIsVisible) {
@@ -85,19 +62,19 @@ export default function usePresence(
         cancelAnimationFrame(animationFrameId);
       };
     }
-  }, [animateIsVisible, enterTransitionDuration, isMounted, isVisible]);
+  }, [animateIsVisible, isMounted, isVisible]);
 
   useEffect(() => {
     if (animateIsVisible && !hasEntered) {
       const timeoutId = setTimeout(() => {
         setHasEntered(true);
-      }, enterTransitionDuration);
+      }, opts.transitionDuration);
 
       return () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [animateIsVisible, enterTransitionDuration, hasEntered]);
+  }, [animateIsVisible, hasEntered, opts.transitionDuration]);
 
   return {
     isMounted,

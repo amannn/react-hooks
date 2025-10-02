@@ -30,27 +30,28 @@ function Expander({children, isOpen, transitionDuration = 500}) {
   if (!isMounted) {
     return null;
   }
-  
+
   return (
-    <div style={{
-      overflow: 'hidden',
-      maxHeight: 0,
-      opacity: 0,
-      transitionDuration: `${transitionDuration}ms`,
-      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      transitionProperty: 'max-height, opacity',
-      ...(isVisible && {
-        maxHeight: 500,
-        opacity: 1,
-        transitionTimingFunction: 'cubic-bezier(0.8, 0, 0.6, 1)'
-      }),
-      ...(isAnimating && {willChange: 'max-height, opacity'})
-    }}>
-      {children}
+    <div
+      style={{
+        display: 'grid',
+        overflow: 'hidden',
+        opacity: 0,
+        transitionDuration: `${transitionDuration}ms`,
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        transitionProperty: 'grid-template-rows, opacity',
+        gridTemplateRows: isVisible ? '1fr' : '0fr',
+        ...(isVisible && {opacity: 1}),
+        ...(isAnimating && {willChange: 'grid-template-rows, opacity'})
+      }}
+    >
+      <div style={{overflow: 'hidden'}}>{children}</div>
     </div>
   );
 }
 ```
+
+(this uses a [CSS grid auto height trick](https://css-tricks.com/css-grid-can-do-auto-height-transitions/))
 
 ## API
 
@@ -72,14 +73,18 @@ const {
   opts: {
     /** Duration in milliseconds used both for enter and exit transitions. */
     transitionDuration: number;
-    /** Duration in milliseconds used for enter transitions (overrides `transitionDuration` if provided). */
-    enterTransitionDuration: number;
-    /** Duration in milliseconds used for exit transitions (overrides `transitionDuration` if provided). */
-    exitTransitionDuration: number;
     /** Opt-in to animating the entering of an element if `isVisible` is `true` during the initial mount. */
     initialEnter?: boolean;
   }
 )
+```
+
+If you want to use different transition durations for enter and exit, you can configure `transitionDuration` conditionally:
+
+```tsx
+const {isMounted, isVisible} = usePresence(isOpen, {
+  transitionDuration: isOpen ? /* enter */ 500 : /* exit */ 300
+});
 ```
 
 ## `usePresenceSwitch`
@@ -117,7 +122,7 @@ const tabs = [
   {
     title: 'Tab 3',
     content: 'Tab 3 content'
-  },
+  }
 ];
 
 function Tabs() {
@@ -130,19 +135,15 @@ function Tabs() {
           {tab.title}
         </button>
       ))}
-      <TabContent>
-        {tabs[tabIndex].content}
-      </TabContent>
+      <TabContent>{tabs[tabIndex].content}</TabContent>
     </>
   );
 }
 
-function TabContent({ children, transitionDuration = 500 }) {
-  const {
-    isMounted,
-    isVisible,
-    mountedItem,
-  } = usePresenceSwitch(children, { transitionDuration });
+function TabContent({children, transitionDuration = 500}) {
+  const {isMounted, isVisible, mountedItem} = usePresenceSwitch(children, {
+    transitionDuration
+  });
 
   if (!isMounted) {
     return null;
